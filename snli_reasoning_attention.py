@@ -149,9 +149,11 @@ def main(num_epochs=10, k=100, batch_size=32,
                                      unchanged_W_shape=unchanged_W_shape,
                                      oov_in_train_W=premise_embedding.oov_in_train_W,
                                      oov_in_train_W_shape=oov_in_train_W_shape)
-    l_premise_linear = CustomDense(premise_embedding, k)
+    l_premise_linear = CustomDense(premise_embedding, k,
+                                   nonlinearity=lasagne.nonlinearities.linear)
     l_hypo_linear = CustomDense(hypo_embedding, k,
-                                W=l_premise_linear.W, b=l_premise_linear.b)
+                                W=l_premise_linear.W, b=l_premise_linear.b,
+                                nonlinearity=lasagne.nonlinearities.linear)
     # best hypoparameters
     p = 0.1
     learning_rate = 0.003
@@ -159,8 +161,8 @@ def main(num_epochs=10, k=100, batch_size=32,
 
     l_premise_dropped = lasagne.layers.DropoutLayer(l_premise_linear, p)
     l_hypo_dropped = lasagne.layers.DropoutLayer(l_hypo_linear, p)
-    encoder = CustomLSTMEncoder(l_premise_dropped, k, mask_input=l_premise_mask)
-    decoder = CustomLSTMDecoder(l_hypo_dropped, k, cell_init=encoder, mask_input=l_hypo_mask,
+    encoder = CustomLSTMEncoder(l_premise_dropped, k, peepholes=False, mask_input=l_premise_mask)
+    decoder = CustomLSTMDecoder(l_hypo_dropped, k, cell_init=encoder, peepholes=False, mask_input=l_hypo_mask,
                                 encoder_mask_input=l_premise_mask,
                                 attention=attention,
                                 word_by_word=word_by_word

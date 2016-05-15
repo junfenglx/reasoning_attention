@@ -8,8 +8,8 @@ Paper see [http://arxiv.org/abs/1509.06664][1].
 
 Requirements
 ===========
-Python 3
-Lasagne
+* Python 3
+* Lasagne
 
 
 [1]: http://arxiv.org/abs/1509.06664
