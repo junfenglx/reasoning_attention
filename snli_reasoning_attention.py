@@ -157,7 +157,8 @@ def main(num_epochs=10, k=100, batch_size=32,
     # best hypoparameters
     p = 0.1
     learning_rate = 0.003
-    l2_weight = 0.0003
+    # l2_weight = 0.0003
+    l2_weight = 0.
 
     l_premise_dropped = lasagne.layers.DropoutLayer(l_premise_linear, p)
     l_hypo_dropped = lasagne.layers.DropoutLayer(l_hypo_linear, p)
@@ -185,10 +186,13 @@ def main(num_epochs=10, k=100, batch_size=32,
     # The network output will have shape (n_batch, 3);
     loss = lasagne.objectives.categorical_crossentropy(prediction, target_var)
     cost = loss.mean()
-    # apply l2 regularization
-    l2_penalty = lasagne.regularization.regularize_network_params(l_softmax,
-                                                                  lasagne.regularization.l2) * l2_weight
-    cost = cost + l2_penalty
+    if l2_weight > 0.:
+        # apply l2 regularization
+        print('apply l2 penalty, weight: {}'.format(l2_weight))
+        l2_penalty = lasagne.regularization.regularize_network_params(
+                l_softmax,
+                lasagne.regularization.l2) * l2_weight
+        cost += l2_penalty
     # Retrieve all parameters from the network
     all_params = lasagne.layers.get_all_params(l_softmax, trainable=True)
     # Compute adam updates for training
@@ -316,7 +320,7 @@ if __name__ == '__main__':
             sys.exit(1)
 
     main(num_epochs=20, batch_size=128,
-         load_previous=False,
+         load_previous=True,
          attention=attention,
          word_by_word=word_by_word,
          mode=mode)
