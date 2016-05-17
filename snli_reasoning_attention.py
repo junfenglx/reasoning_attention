@@ -137,11 +137,16 @@ def main(num_epochs=10, k=100, batch_size=32,
     oov_in_train_W_shape = oov_in_train_W.shape
     print('unchanged_W.shape: {0}'.format(unchanged_W_shape))
     print('oov_in_train_W.shape: {0}'.format(oov_in_train_W_shape))
-    # l_in = lasagne.layers.InputLayer(shape=(None, None))
+    # best hypoparameters
+    p = 0.1
+    learning_rate = 0.003
+    # l2_weight = 0.0003
+    l2_weight = 0.
     l_premise = lasagne.layers.InputLayer(shape=(None, premise_max), input_var=premise_var)
     l_premise_mask = lasagne.layers.InputLayer(shape=(None, premise_max), input_var=premise_mask)
     l_hypo = lasagne.layers.InputLayer(shape=(None, hypothesis_max), input_var=hypo_var)
     l_hypo_mask = lasagne.layers.InputLayer(shape=(None, hypothesis_max), input_var=hypo_mask)
+
     premise_embedding = CustomEmbedding(l_premise, unchanged_W, unchanged_W_shape,
                                         oov_in_train_W, oov_in_train_W_shape)
     # weights shared with premise_embedding
@@ -149,40 +154,38 @@ def main(num_epochs=10, k=100, batch_size=32,
                                      unchanged_W_shape=unchanged_W_shape,
                                      oov_in_train_W=premise_embedding.oov_in_train_W,
                                      oov_in_train_W_shape=oov_in_train_W_shape)
-    l_premise_linear = CustomDense(premise_embedding, k,
+    if p > 0.:
+        print('apply dropout rate {}'.format(p))
+    premise_embedding_dropped = lasagne.layers.DropoutLayer(premise_embedding, p)
+    hypo_embedding_dropped = lasagne.layers.DropoutLayer(hypo_embedding, p)
+
+    l_premise_linear = CustomDense(premise_embedding_dropped, k,
                                    nonlinearity=lasagne.nonlinearities.linear)
-    l_hypo_linear = CustomDense(hypo_embedding, k,
+    l_hypo_linear = CustomDense(hypo_embedding_dropped, k,
                                 W=l_premise_linear.W, b=l_premise_linear.b,
                                 nonlinearity=lasagne.nonlinearities.linear)
-    # best hypoparameters
-    p = 0.1
-    learning_rate = 0.003
-    # l2_weight = 0.0003
-    l2_weight = 0.
 
-    l_premise_dropped = lasagne.layers.DropoutLayer(l_premise_linear, p)
-    l_hypo_dropped = lasagne.layers.DropoutLayer(l_hypo_linear, p)
-    encoder = CustomLSTMEncoder(l_premise_dropped, k, peepholes=False, mask_input=l_premise_mask)
-    decoder = CustomLSTMDecoder(l_hypo_dropped, k, cell_init=encoder, peepholes=False, mask_input=l_hypo_mask,
+    encoder = CustomLSTMEncoder(l_premise_linear, k, peepholes=False, mask_input=l_premise_mask)
+    decoder = CustomLSTMDecoder(l_hypo_linear, k, cell_init=encoder, peepholes=False, mask_input=l_hypo_mask,
                                 encoder_mask_input=l_premise_mask,
                                 attention=attention,
                                 word_by_word=word_by_word
                                 )
-    decoder_dropped = lasagne.layers.DropoutLayer(decoder, p)
     l_softmax = lasagne.layers.DenseLayer(
-            decoder_dropped, num_units=3,
+            decoder, num_units=3,
             nonlinearity=lasagne.nonlinearities.softmax)
+    l_softmax_dropped = lasagne.layers.DropoutLayer(l_softmax, p)
     if load_previous:
         print('loading previous saved model ...')
         # And load them again later on like this:
         with np.load(save_filename) as f:
             param_values = [f['arr_%d' % i] for i in range(len(f.files))]
-        lasagne.layers.set_all_param_values(l_softmax, param_values)
+        lasagne.layers.set_all_param_values(l_softmax_dropped, param_values)
 
     target_var = T.ivector('target_var')
 
     # lasagne.layers.get_output produces a variable for the output of the net
-    prediction = lasagne.layers.get_output(l_softmax)
+    prediction = lasagne.layers.get_output(l_softmax_dropped, deterministic=False)
     # The network output will have shape (n_batch, 3);
     loss = lasagne.objectives.categorical_crossentropy(prediction, target_var)
     cost = loss.mean()
@@ -190,16 +193,16 @@ def main(num_epochs=10, k=100, batch_size=32,
         # apply l2 regularization
         print('apply l2 penalty, weight: {}'.format(l2_weight))
         l2_penalty = lasagne.regularization.regularize_network_params(
-                l_softmax,
+                l_softmax_dropped,
                 lasagne.regularization.l2) * l2_weight
         cost += l2_penalty
     # Retrieve all parameters from the network
-    all_params = lasagne.layers.get_all_params(l_softmax, trainable=True)
+    all_params = lasagne.layers.get_all_params(l_softmax_dropped, trainable=True)
     # Compute adam updates for training
     print("Computing updates ...")
     updates = lasagne.updates.adam(cost, all_params, learning_rate=learning_rate)
 
-    test_prediction = lasagne.layers.get_output(l_softmax, deterministic=True)
+    test_prediction = lasagne.layers.get_output(l_softmax_dropped, deterministic=True)
     test_loss = lasagne.objectives.categorical_crossentropy(test_prediction,
                                                             target_var)
     test_loss = test_loss.mean()
@@ -246,7 +249,7 @@ def main(num_epochs=10, k=100, batch_size=32,
                     print("  current training accuracy:\t\t{:.6f}".format(train_acc / train_batches))
                     print('saving to ...')
                     np.savez(save_filename,
-                             *lasagne.layers.get_all_param_values(l_softmax))
+                             *lasagne.layers.get_all_param_values(l_softmax_dropped))
                     save_at = time.time()
 
             # And a full pass over the validation data:
@@ -319,8 +322,8 @@ if __name__ == '__main__':
             print('only supports [condition|attention|word_by_word]')
             sys.exit(1)
 
-    main(num_epochs=20, batch_size=128,
-         load_previous=True,
+    main(num_epochs=20, batch_size=32,
+         load_previous=False,
          attention=attention,
          word_by_word=word_by_word,
          mode=mode)
