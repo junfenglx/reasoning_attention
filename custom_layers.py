@@ -339,10 +339,10 @@ class CustomLSTMDecoder(lasagne.layers.LSTMLayer):
             self.w_attend = self.add_param(init.Normal(0.1), (num_units, 1), 'w_attend')
             self.W_p_attend = self.add_param(init.Normal(0.1), (num_units, num_units), 'W_p_attend')
             self.W_x_attend = self.add_param(init.Normal(0.1), (num_units, num_units), 'W_x_attend')
+            self.r_init = self.add_param(init.Constant(0.),
+                                         (1, num_units), name="r_init",
+                                         trainable=False, regularizable=False)
             if self.word_by_word:
-                self.r_init = self.add_param(init.Constant(0.),
-                                             (1, num_units), name="r_init",
-                                             trainable=False, regularizable=False)
                 self.W_r_attend = self.add_param(init.Normal(0.1), (num_units, num_units), 'W_r_attend')
                 self.W_t_attend = self.add_param(init.Normal(0.1), (num_units, num_units), 'W_t_attend')
 
@@ -396,14 +396,10 @@ class CustomLSTMDecoder(lasagne.layers.LSTMLayer):
             # (n_batch, n_time_steps)
             encoder_mask = inputs[self.encoder_mask_incoming_index]
             encoder_mask = encoder_mask.astype('float32')
-            # encoder_mask is (n_batch, n_time_steps, 1)
-            encoder_mask = encoder_mask.dimshuffle(0, 1, 'x')
         cell_init = inputs[self.cell_init_incoming_index]
         if self.attention:
             # (n_batch, n_time_steps, n_features)
             encoder_hs = cell_init[0]
-            # apply encoder_mask to encoder_hs
-            encoder_hs = encoder_hs * encoder_mask
         cell_init = cell_init[1]
 
         # Treat all dimensions after the second as flattened feature dimensions
@@ -482,14 +478,11 @@ class CustomLSTMDecoder(lasagne.layers.LSTMLayer):
 
             # Compute new hidden unit activation
             hid = outgate*self.nonlinearity(cell)
-            r = None
+            r = previous_r
             if self.attention and self.word_by_word:
                 mh = T.dot(hid, self.W_h_attend) + T.dot(previous_r, self.W_r_attend)
                 # mh is (n_batch, 1, n_features)
                 mh = mh.dimshuffle(0, 'x', 1)
-                # encoder_mask is (n_batch, n_time_steps, 1)
-                mh = mh * encoder_mask
-                # now M has real length encoder_hs
                 M = T.dot(encoder_hs, self.W_y_attend) + mh
                 # (n_batch, n_time_steps, n_features)
                 M = nonlinearities.tanh(M)
@@ -497,9 +490,13 @@ class CustomLSTMDecoder(lasagne.layers.LSTMLayer):
                 alpha = T.dot(M, self.w_attend)
                 # now is (n_batch, n_time_steps)
                 alpha = T.flatten(alpha, 2)
-                # when i > encoder_seq_len, alpha_i should be 0.
+                # 0 after softmax is not 0, fuck, my mistake.
                 alpha = T.nnet.softmax(alpha)
-                alpha = alpha.dimshuffle(0, 1 ,'x')
+                # apply encoder_mask to alpha
+                # encoder_mask is (n_batch, n_time_steps)
+                # when i > encoder_seq_len, alpha_i should be 0.
+                alpha = alpha * encoder_mask
+                alpha = alpha.dimshuffle(0, 1, 'x')
                 weighted_encoder = T.sum(encoder_hs * alpha, axis=1)
                 r = weighted_encoder + nonlinearities.tanh(T.dot(previous_r, self.W_t_attend))
 
@@ -544,9 +541,8 @@ class CustomLSTMDecoder(lasagne.layers.LSTMLayer):
         if not self.precompute_input:
             non_seqs += [W_in_stacked, b_stacked]
 
-        r_init = None
+        r_init = T.dot(ones, self.r_init)
         if self.attention and self.word_by_word:
-            r_init = T.dot(ones, self.r_init)
             non_seqs += [self.W_y_attend,
                          self.W_h_attend,
                          self.W_r_attend,
@@ -573,7 +569,6 @@ class CustomLSTMDecoder(lasagne.layers.LSTMLayer):
             else:
                 mh = T.dot(hid_N, self.W_h_attend)
                 mh = mh.dimshuffle(0, 'x', 1)
-                mh = mh * encoder_mask
                 M = T.dot(encoder_hs, self.W_y_attend) + mh
                 # (n_batch, n_time_steps, n_features)
                 M = nonlinearities.tanh(M)
@@ -581,7 +576,11 @@ class CustomLSTMDecoder(lasagne.layers.LSTMLayer):
                 # (n_batch, n_time_steps)
                 alpha = T.flatten(alpha, 2)
                 alpha = T.nnet.softmax(alpha)
-                alpha = alpha.dimshuffle(0, 1 ,'x')
+                # apply encoder_mask to alpha
+                # encoder_mask is (n_batch, n_time_steps)
+                # when i > encoder_seq_len, alpha_i should be 0.
+                alpha = alpha * encoder_mask
+                alpha = alpha.dimshuffle(0, 1, 'x')
                 # (n_batch, n_features)
                 r_N = T.sum(encoder_hs * alpha, axis=1)
             out = nonlinearities.tanh(T.dot(r_N, self.W_p_attend) + T.dot(hid_N, self.W_x_attend))
