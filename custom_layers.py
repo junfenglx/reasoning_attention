@@ -326,6 +326,9 @@ class CustomLSTMDecoder(lasagne.layers.LSTMLayer):
             raise ValueError('cell_init must be CustomLSTMEncoder'
                              ' and num_units should equal')
         self.r_init = None
+        self.r_init = self.add_param(init.Constant(0.),
+                                     (1, num_units), name="r_init",
+                                     trainable=False, regularizable=False)
         if self.word_by_word:
             # rewrites
             self.attention = True
@@ -339,9 +342,6 @@ class CustomLSTMDecoder(lasagne.layers.LSTMLayer):
             self.w_attend = self.add_param(init.Normal(0.1), (num_units, 1), 'w_attend')
             self.W_p_attend = self.add_param(init.Normal(0.1), (num_units, num_units), 'W_p_attend')
             self.W_x_attend = self.add_param(init.Normal(0.1), (num_units, num_units), 'W_x_attend')
-            self.r_init = self.add_param(init.Constant(0.),
-                                         (1, num_units), name="r_init",
-                                         trainable=False, regularizable=False)
             if self.word_by_word:
                 self.W_r_attend = self.add_param(init.Normal(0.1), (num_units, num_units), 'W_r_attend')
                 self.W_t_attend = self.add_param(init.Normal(0.1), (num_units, num_units), 'W_t_attend')
@@ -491,10 +491,13 @@ class CustomLSTMDecoder(lasagne.layers.LSTMLayer):
                 # now is (n_batch, n_time_steps)
                 alpha = T.flatten(alpha, 2)
                 # 0 after softmax is not 0, fuck, my mistake.
+                # when i > encoder_seq_len, fill alpha_i to -np.inf
+                alpha = T.switch(encoder_mask, alpha, -np.inf)
                 alpha = T.nnet.softmax(alpha)
                 # apply encoder_mask to alpha
                 # encoder_mask is (n_batch, n_time_steps)
                 # when i > encoder_seq_len, alpha_i should be 0.
+                # actually not need mask, but in case of error
                 alpha = alpha * encoder_mask
                 alpha = alpha.dimshuffle(0, 1, 'x')
                 weighted_encoder = T.sum(encoder_hs * alpha, axis=1)
@@ -575,10 +578,13 @@ class CustomLSTMDecoder(lasagne.layers.LSTMLayer):
                 alpha = T.dot(M, self.w_attend)
                 # (n_batch, n_time_steps)
                 alpha = T.flatten(alpha, 2)
+                # when i > encoder_seq_len, fill alpha_i to -np.inf
+                alpha = T.switch(encoder_mask, alpha, -np.inf)
                 alpha = T.nnet.softmax(alpha)
                 # apply encoder_mask to alpha
                 # encoder_mask is (n_batch, n_time_steps)
                 # when i > encoder_seq_len, alpha_i should be 0.
+                # actually not need mask, but in case of error
                 alpha = alpha * encoder_mask
                 alpha = alpha.dimshuffle(0, 1, 'x')
                 # (n_batch, n_features)

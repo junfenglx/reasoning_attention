@@ -113,12 +113,15 @@ hypothesis_max = 62
 # In[8]:
 
 def main(num_epochs=10, k=100, batch_size=32,
-         save_freq=1000, load_previous=False,
+         display_freq=100,
+         save_freq=1000,
+         load_previous=False,
          attention=True,
          word_by_word=True, mode='word_by_word'):
     print('num_epochs: {}'.format(num_epochs))
     print('k: {}'.format(k))
     print('batch_size: {}'.format(batch_size))
+    print('display_frequency: {}'.format(display_freq))
     print('save_frequency: {}'.format(save_freq))
     print('load previous: {}'.format(load_previous))
     print('attention: {}'.format(attention))
@@ -142,6 +145,7 @@ def main(num_epochs=10, k=100, batch_size=32,
     learning_rate = 0.003
     l2_weight = 0.0003
     # l2_weight = 0.
+
     l_premise = lasagne.layers.InputLayer(shape=(None, premise_max), input_var=premise_var)
     l_premise_mask = lasagne.layers.InputLayer(shape=(None, premise_max), input_var=premise_mask)
     l_hypo = lasagne.layers.InputLayer(shape=(None, hypothesis_max), input_var=hypo_var)
@@ -241,12 +245,14 @@ def main(num_epochs=10, k=100, batch_size=32,
                 err, acc = val_fn(ps, p_masks, hs, h_masks, labels)
                 train_acc += acc
                 train_batches += 1
-                # do tmp save model
-                if train_batches % save_freq == 0:
+                # display
+                if train_batches % display_freq == 0:
                     print("Seen {:d} samples, time used: {:.3f}s".format(
                         start_i + batch_size, time.time() - save_at))
                     print("  current training loss:\t\t{:.6f}".format(train_err / train_batches))
                     print("  current training accuracy:\t\t{:.6f}".format(train_acc / train_batches))
+                # do tmp save model
+                if train_batches % save_freq == 0:
                     print('saving to ...')
                     np.savez(save_filename,
                              *lasagne.layers.get_all_param_values(l_softmax))
@@ -322,7 +328,7 @@ if __name__ == '__main__':
             print('only supports [condition|attention|word_by_word]')
             sys.exit(1)
 
-    main(num_epochs=20, batch_size=128,
+    main(num_epochs=20, batch_size=32,
          load_previous=False,
          attention=attention,
          word_by_word=word_by_word,
