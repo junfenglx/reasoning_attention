@@ -492,13 +492,13 @@ class CustomLSTMDecoder(lasagne.layers.LSTMLayer):
                 alpha = T.flatten(alpha, 2)
                 # 0 after softmax is not 0, fuck, my mistake.
                 # when i > encoder_seq_len, fill alpha_i to -np.inf
-                alpha = T.switch(encoder_mask, alpha, -np.inf)
+                # alpha = T.switch(encoder_mask, alpha, -np.inf)
                 alpha = T.nnet.softmax(alpha)
                 # apply encoder_mask to alpha
                 # encoder_mask is (n_batch, n_time_steps)
                 # when i > encoder_seq_len, alpha_i should be 0.
                 # actually not need mask, but in case of error
-                alpha = alpha * encoder_mask
+                # alpha = alpha * encoder_mask
                 alpha = alpha.dimshuffle(0, 1, 'x')
                 weighted_encoder = T.sum(encoder_hs * alpha, axis=1)
                 r = weighted_encoder + nonlinearities.tanh(T.dot(previous_r, self.W_t_attend))
@@ -552,7 +552,8 @@ class CustomLSTMDecoder(lasagne.layers.LSTMLayer):
                          self.w_attend,
                          self.W_t_attend,
                          encoder_hs,
-                         encoder_mask]
+                         # encoder_mask
+                         ]
         # Scan op iterates over first dimension of input and repeatedly
         # applies the step function
         cell_out, hid_out, r_out = theano.scan(
@@ -579,13 +580,13 @@ class CustomLSTMDecoder(lasagne.layers.LSTMLayer):
                 # (n_batch, n_time_steps)
                 alpha = T.flatten(alpha, 2)
                 # when i > encoder_seq_len, fill alpha_i to -np.inf
-                alpha = T.switch(encoder_mask, alpha, -np.inf)
+                # alpha = T.switch(encoder_mask, alpha, -np.inf)
                 alpha = T.nnet.softmax(alpha)
                 # apply encoder_mask to alpha
                 # encoder_mask is (n_batch, n_time_steps)
                 # when i > encoder_seq_len, alpha_i should be 0.
                 # actually not need mask, but in case of error
-                alpha = alpha * encoder_mask
+                # alpha = alpha * encoder_mask
                 alpha = alpha.dimshuffle(0, 1, 'x')
                 # (n_batch, n_features)
                 r_N = T.sum(encoder_hs * alpha, axis=1)
