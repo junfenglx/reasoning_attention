@@ -112,7 +112,7 @@ hypothesis_max = 62
 
 # In[8]:
 
-def main(num_epochs=10, k=100, batch_size=32,
+def main(num_epochs=10, k=100, batch_size=128,
          display_freq=100,
          save_freq=1000,
          load_previous=False,
@@ -143,7 +143,8 @@ def main(num_epochs=10, k=100, batch_size=32,
     # best hypoparameters
     p = 0.1
     learning_rate = 0.003
-    l2_weight = 0.0003
+    # l2_weight = 0.0003
+    l2_weight = 0.0001
     # l2_weight = 0.
 
     l_premise = lasagne.layers.InputLayer(shape=(None, premise_max), input_var=premise_var)
@@ -158,19 +159,19 @@ def main(num_epochs=10, k=100, batch_size=32,
                                      unchanged_W_shape=unchanged_W_shape,
                                      oov_in_train_W=premise_embedding.oov_in_train_W,
                                      oov_in_train_W_shape=oov_in_train_W_shape)
-    if p > 0.:
-        print('apply dropout rate {}'.format(p))
-    premise_embedding_dropped = lasagne.layers.DropoutLayer(premise_embedding, p)
-    hypo_embedding_dropped = lasagne.layers.DropoutLayer(hypo_embedding, p)
 
-    l_premise_linear = CustomDense(premise_embedding_dropped, k,
+    l_premise_linear = CustomDense(premise_embedding, k,
                                    nonlinearity=lasagne.nonlinearities.linear)
-    l_hypo_linear = CustomDense(hypo_embedding_dropped, k,
+    l_hypo_linear = CustomDense(hypo_embedding, k,
                                 W=l_premise_linear.W, b=l_premise_linear.b,
                                 nonlinearity=lasagne.nonlinearities.linear)
+    if p > 0.:
+        print('apply dropout rate {}'.format(p))
+    l_premise_linear_dropped = lasagne.layers.DropoutLayer(l_premise_linear, p)
+    l_hypo_linear_dropped = lasagne.layers.DropoutLayer(l_hypo_linear, p)
 
-    encoder = CustomLSTMEncoder(l_premise_linear, k, peepholes=False, mask_input=l_premise_mask)
-    decoder = CustomLSTMDecoder(l_hypo_linear, k, cell_init=encoder, peepholes=False, mask_input=l_hypo_mask,
+    encoder = CustomLSTMEncoder(l_premise_linear_dropped, k, peepholes=False, mask_input=l_premise_mask)
+    decoder = CustomLSTMDecoder(l_hypo_linear_dropped, k, cell_init=encoder, peepholes=False, mask_input=l_hypo_mask,
                                 encoder_mask_input=l_premise_mask,
                                 attention=attention,
                                 word_by_word=word_by_word
@@ -195,10 +196,12 @@ def main(num_epochs=10, k=100, batch_size=32,
     cost = loss.mean()
     if l2_weight > 0.:
         # apply l2 regularization
-        print('apply l2 penalty, weight: {}'.format(l2_weight))
-        l2_penalty = lasagne.regularization.regularize_network_params(
-                l_softmax,
-                lasagne.regularization.l2) * l2_weight
+        print('apply l2 penalty to encoder and decoder, weight: {}'.format(l2_weight))
+        regularized_layers = {encoder: l2_weight,
+                              decoder: l2_weight}
+        l2_penalty = lasagne.regularization.regularize_layer_params_weighted(
+                regularized_layers,
+                lasagne.regularization.l2)
         cost += l2_penalty
     # Retrieve all parameters from the network
     all_params = lasagne.layers.get_all_params(l_softmax, trainable=True)
@@ -328,7 +331,7 @@ if __name__ == '__main__':
             print('only supports [condition|attention|word_by_word]')
             sys.exit(1)
 
-    main(num_epochs=20, batch_size=32,
+    main(num_epochs=20, batch_size=128,
          load_previous=False,
          attention=attention,
          word_by_word=word_by_word,

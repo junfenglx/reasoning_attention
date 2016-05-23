@@ -400,6 +400,8 @@ class CustomLSTMDecoder(lasagne.layers.LSTMLayer):
         if self.attention:
             # (n_batch, n_time_steps, n_features)
             encoder_hs = cell_init[0]
+            # encoder_mask is # (n_batch, n_time_steps, 1)
+            encoder_hs = encoder_hs * encoder_mask.dimshuffle(0, 1, 'x')
         cell_init = cell_init[1]
 
         # Treat all dimensions after the second as flattened feature dimensions
