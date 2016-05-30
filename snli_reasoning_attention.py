@@ -142,10 +142,10 @@ def main(num_epochs=10, k=100, batch_size=128,
     print('oov_in_train_W.shape: {0}'.format(oov_in_train_W_shape))
     # best hypoparameters
     p = 0.1
-    learning_rate = 0.003
+    learning_rate = 0.001
+    # learning_rate = 0.003
     # l2_weight = 0.0003
     l2_weight = 0.0001
-    # l2_weight = 0.
 
     l_premise = lasagne.layers.InputLayer(shape=(None, premise_max), input_var=premise_var)
     l_premise_mask = lasagne.layers.InputLayer(shape=(None, premise_max), input_var=premise_mask)
@@ -153,32 +153,33 @@ def main(num_epochs=10, k=100, batch_size=128,
     l_hypo_mask = lasagne.layers.InputLayer(shape=(None, hypothesis_max), input_var=hypo_mask)
 
     premise_embedding = CustomEmbedding(l_premise, unchanged_W, unchanged_W_shape,
-                                        oov_in_train_W, oov_in_train_W_shape)
+                                        oov_in_train_W, oov_in_train_W_shape,
+                                        p=p)
     # weights shared with premise_embedding
     hypo_embedding = CustomEmbedding(l_hypo, unchanged_W=premise_embedding.unchanged_W,
                                      unchanged_W_shape=unchanged_W_shape,
                                      oov_in_train_W=premise_embedding.oov_in_train_W,
-                                     oov_in_train_W_shape=oov_in_train_W_shape)
+                                     oov_in_train_W_shape=oov_in_train_W_shape,
+                                     p=p,
+                                     dropout_mask=premise_embedding.dropout_mask)
 
     l_premise_linear = CustomDense(premise_embedding, k,
                                    nonlinearity=lasagne.nonlinearities.linear)
     l_hypo_linear = CustomDense(hypo_embedding, k,
                                 W=l_premise_linear.W, b=l_premise_linear.b,
                                 nonlinearity=lasagne.nonlinearities.linear)
-    if p > 0.:
-        print('apply dropout rate {}'.format(p))
-    l_premise_linear_dropped = lasagne.layers.DropoutLayer(l_premise_linear, p)
-    l_hypo_linear_dropped = lasagne.layers.DropoutLayer(l_hypo_linear, p)
 
-    encoder = CustomLSTMEncoder(l_premise_linear_dropped, k, peepholes=False, mask_input=l_premise_mask)
-    decoder = CustomLSTMDecoder(l_hypo_linear_dropped, k, cell_init=encoder, peepholes=False, mask_input=l_hypo_mask,
+    encoder = CustomLSTMEncoder(l_premise_linear, k, peepholes=False, mask_input=l_premise_mask)
+    decoder = CustomLSTMDecoder(l_hypo_linear, k, cell_init=encoder, peepholes=False, mask_input=l_hypo_mask,
                                 encoder_mask_input=l_premise_mask,
                                 attention=attention,
                                 word_by_word=word_by_word
                                 )
-    decoder_dropped = lasagne.layers.DropoutLayer(decoder, p)
+    if p > 0.:
+        print('apply dropout rate {} to decoder'.format(p))
+        decoder = lasagne.layers.DropoutLayer(decoder, p)
     l_softmax = lasagne.layers.DenseLayer(
-            decoder_dropped, num_units=3,
+            decoder, num_units=3,
             nonlinearity=lasagne.nonlinearities.softmax)
     if load_previous:
         print('loading previous saved model ...')
