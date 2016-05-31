@@ -16,7 +16,7 @@ import theano.tensor as T
 import lasagne
 import time
 
-from custom_layers import CustomEmbedding, CustomLSTMEncoder, CustomDense, CustomLSTMDecoder
+from custom_layers import CustomEmbedding, MatchLSTM, FakeFeatureDot2Layer
 
 
 # In[2]:
@@ -35,8 +35,8 @@ def prepare(df):
     lengths_h = [len(s) for s in seqs_h]
 
     n_samples = len(seqs_p)
-    maxlen_p = numpy.max(lengths_p)
-    maxlen_h = numpy.max(lengths_h)
+    maxlen_p = numpy.max(lengths_p) + 1
+    maxlen_h = numpy.max(lengths_h) + 1
 
     premise = numpy.zeros((n_samples, maxlen_p))
     hypothesis = numpy.zeros((n_samples, maxlen_h))
@@ -106,27 +106,23 @@ with open('./snli/converted_test.pkl', 'rb') as f:
 
 # In[7]:
 
-premise_max = 82
-hypothesis_max = 62
+premise_max = 82 + 1
+hypothesis_max = 62 + 1
 
 
 # In[8]:
 
-def main(num_epochs=10, k=100, batch_size=128,
+def main(num_epochs=10, k=300, batch_size=30,
          display_freq=100,
          save_freq=1000,
-         load_previous=False,
-         attention=True,
-         word_by_word=True, mode='word_by_word'):
+         load_previous=False):
     print('num_epochs: {}'.format(num_epochs))
     print('k: {}'.format(k))
     print('batch_size: {}'.format(batch_size))
     print('display_frequency: {}'.format(display_freq))
     print('save_frequency: {}'.format(save_freq))
     print('load previous: {}'.format(load_previous))
-    print('attention: {}'.format(attention))
-    print('word_by_word: {}'.format(word_by_word))
-    save_filename = './snli/{}_model.npz'.format(mode)
+    save_filename = './snli/mlstm_model.npz'
     print("Building network ...")
     premise_var = T.imatrix('premise_var')
     premise_mask = T.imatrix('premise_mask')
@@ -141,11 +137,12 @@ def main(num_epochs=10, k=100, batch_size=128,
     print('unchanged_W.shape: {0}'.format(unchanged_W_shape))
     print('oov_in_train_W.shape: {0}'.format(oov_in_train_W_shape))
     # best hypoparameters
-    p = 0.1
+    p = 0.3
     learning_rate = 0.001
+    # learning_rate = theano.shared(0.001)
     # learning_rate = 0.003
     # l2_weight = 0.0003
-    l2_weight = 0.0001
+    l2_weight = 0.
 
     l_premise = lasagne.layers.InputLayer(shape=(None, premise_max), input_var=premise_var)
     l_premise_mask = lasagne.layers.InputLayer(shape=(None, premise_max), input_var=premise_mask)
@@ -162,24 +159,16 @@ def main(num_epochs=10, k=100, batch_size=128,
                                      oov_in_train_W_shape=oov_in_train_W_shape,
                                      p=p,
                                      dropout_mask=premise_embedding.dropout_mask)
-
-    l_premise_linear = CustomDense(premise_embedding, k,
-                                   nonlinearity=lasagne.nonlinearities.linear)
-    l_hypo_linear = CustomDense(hypo_embedding, k,
-                                W=l_premise_linear.W, b=l_premise_linear.b,
-                                nonlinearity=lasagne.nonlinearities.linear)
-
-    encoder = CustomLSTMEncoder(l_premise_linear, k, peepholes=False, mask_input=l_premise_mask)
-    decoder = CustomLSTMDecoder(l_hypo_linear, k, cell_init=encoder, peepholes=False, mask_input=l_hypo_mask,
-                                encoder_mask_input=l_premise_mask,
-                                attention=attention,
-                                word_by_word=word_by_word
-                                )
+    hypo_embedding = FakeFeatureDot2Layer(hypo_embedding)
+    mlstm = MatchLSTM(hypo_embedding, k, peepholes=False, mask_input=l_hypo_mask,
+                      encoder_input=premise_embedding, encoder_mask_input=l_premise_mask,
+                      )
+    p = 0.
     if p > 0.:
         print('apply dropout rate {} to decoder'.format(p))
-        decoder = lasagne.layers.DropoutLayer(decoder, p)
+        decoder = lasagne.layers.DropoutLayer(mlstm, p)
     l_softmax = lasagne.layers.DenseLayer(
-            decoder, num_units=3,
+            mlstm, num_units=3,
             nonlinearity=lasagne.nonlinearities.softmax)
     if load_previous:
         print('loading previous saved model ...')
@@ -198,8 +187,7 @@ def main(num_epochs=10, k=100, batch_size=128,
     if l2_weight > 0.:
         # apply l2 regularization
         print('apply l2 penalty to encoder and decoder, weight: {}'.format(l2_weight))
-        regularized_layers = {encoder: l2_weight,
-                              decoder: l2_weight}
+        regularized_layers = {mlstm: l2_weight}
         l2_penalty = lasagne.regularization.regularize_layer_params_weighted(
                 regularized_layers,
                 lasagne.regularization.l2)
@@ -241,8 +229,8 @@ def main(num_epochs=10, k=100, batch_size=128,
             train_acc = 0
             train_batches = 0
             start_time = time.time()
-            display_at = time.time()
             save_at = time.time()
+            display_at = time.time()
             for start_i in range(0, len(shuffled_train_df), batch_size):
                 batched_df = shuffled_train_df[start_i:start_i + batch_size]
                 ps, p_masks, hs, h_masks, labels = prepare(batched_df)
@@ -256,9 +244,10 @@ def main(num_epochs=10, k=100, batch_size=128,
                         start_i + batch_size, time.time() - display_at))
                     print("  current training loss:\t\t{:.6f}".format(train_err / train_batches))
                     print("  current training accuracy:\t\t{:.6f}".format(train_acc / train_batches))
+                    display_at = time.time()
                 # do tmp save model
                 if train_batches % save_freq == 0:
-                    print('saving to ..., time used {:.3f}s'.format(time.time() - save_at))
+                    print('saving to ..., time used: {:.3f}s'.format(time.time() - save_at))
                     np.savez(save_filename,
                              *lasagne.layers.get_all_param_values(l_softmax))
                     save_at = time.time()
@@ -333,9 +322,5 @@ if __name__ == '__main__':
             print('only supports [condition|attention|word_by_word]')
             sys.exit(1)
 
-    main(num_epochs=20, batch_size=128,
-         load_previous=False,
-         attention=attention,
-         word_by_word=word_by_word,
-         mode=mode)
+    main(num_epochs=20, batch_size=30, load_previous=False)
 
