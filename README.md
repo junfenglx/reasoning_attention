@@ -1,8 +1,9 @@
-reasoning_attention
+Attention on SNLI
 ===================
-Unofficial implementation algorithms of attention model on SNLI dataset.
+Unofficial implementation algorithms of attention models on SNLI dataset.
 
 Current include papers:
+
 1. "Reasoning About Entailment With Neural Attention", [arXiv:1509.06664][1]
 2. "Learning Natural Language Inference with LSTM", [arXiv:1512.08849][2]
 
@@ -37,7 +38,8 @@ The learning curve of match LSTM with word embedding:
 
 Notes
 =====
-About match LSTM
+About match LSTM:
+
 1. The test acc of match LSTM is 1% smaller than the original paper.
 2. not decay learning rate when train
 3. using Word2Vec pre-trained model
