@@ -1,0 +1,36 @@
+Loading data ...
+Loading dev ...
+10000
+10000
+9842
+Loading test ...
+10000
+10000
+9824
+num_epochs: 20
+k: 300
+batch_size: 30
+display_frequency: 100
+save_frequency: 1000
+load previous: True
+Building network ...
+unchanged_W.shape: (34283, 300)
+oov_in_train_W.shape: (9166, 300)
+loading previous saved model ...
+apply dropout mask id 139780948970800 to embedding matrix ...
+dropout rate is 0.3
+input var is hypo_var
+apply dropout mask id 139780948970800 to embedding matrix ...
+dropout rate is 0.3
+input var is premise_var
+Computing updates ...
+Compiling functions ...
+Testing ...
+dev_df.shape: (9842, 4)
+test_df.shape: (9824, 4)
+Starting evaluating...
+  validation loss:validation0.412881
+  validation accuracy:validation84.54 %
+  test loss:540.419837
+  test accuracy:test84.34 %
+
