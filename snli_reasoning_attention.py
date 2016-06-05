@@ -35,8 +35,8 @@ def prepare(df):
     lengths_h = [len(s) for s in seqs_h]
 
     n_samples = len(seqs_p)
-    maxlen_p = numpy.max(lengths_p)
-    maxlen_h = numpy.max(lengths_h)
+    maxlen_p = numpy.max(lengths_p) + 1
+    maxlen_h = numpy.max(lengths_h) + 1
 
     premise = numpy.zeros((n_samples, maxlen_p))
     hypothesis = numpy.zeros((n_samples, maxlen_h))
@@ -106,8 +106,8 @@ with open('./snli/converted_test.pkl', 'rb') as f:
 
 # In[7]:
 
-premise_max = 82
-hypothesis_max = 62
+premise_max = 82 + 1
+hypothesis_max = 62 + 1
 
 
 # In[8]:
@@ -142,10 +142,10 @@ def main(num_epochs=10, k=100, batch_size=128,
     print('oov_in_train_W.shape: {0}'.format(oov_in_train_W_shape))
     # best hypoparameters
     p = 0.1
-    learning_rate = 0.001
-    # learning_rate = 0.003
-    # l2_weight = 0.0003
-    l2_weight = 0.0001
+    # learning_rate = 0.001
+    learning_rate = 0.0003
+    l2_weight = 0.0003
+    # l2_weight = 0.
 
     l_premise = lasagne.layers.InputLayer(shape=(None, premise_max), input_var=premise_var)
     l_premise_mask = lasagne.layers.InputLayer(shape=(None, premise_max), input_var=premise_mask)
@@ -197,12 +197,11 @@ def main(num_epochs=10, k=100, batch_size=128,
     cost = loss.mean()
     if l2_weight > 0.:
         # apply l2 regularization
-        print('apply l2 penalty to encoder and decoder, weight: {}'.format(l2_weight))
+        print('apply l2 penalty to all layers, weight: {}'.format(l2_weight))
         regularized_layers = {encoder: l2_weight,
                               decoder: l2_weight}
-        l2_penalty = lasagne.regularization.regularize_layer_params_weighted(
-                regularized_layers,
-                lasagne.regularization.l2)
+        l2_penalty = lasagne.regularization.regularize_network_params(l_softmax,
+                                                                      lasagne.regularization.l2) * l2_weight
         cost += l2_penalty
     # Retrieve all parameters from the network
     all_params = lasagne.layers.get_all_params(l_softmax, trainable=True)
@@ -285,21 +284,25 @@ def main(num_epochs=10, k=100, batch_size=128,
             print("  validation accuracy:\t\t{:.2f} %".format(
                     val_acc / val_batches * 100))
 
-        # After training, we compute and print the test error:
-        test_err = 0
-        test_acc = 0
-        test_batches = 0
-        for start_i in range(0, len(test_df), batch_size):
-            batched_df = test_df[start_i:start_i + batch_size]
-            ps, p_masks, hs, h_masks, labels = prepare(batched_df)
-            err, acc = val_fn(ps, p_masks, hs, h_masks, labels)
-            test_err += err
-            test_acc += acc
-            test_batches += 1
-        print("Final results:")
-        print("  test loss:\t\t\t{:.6f}".format(test_err / test_batches))
-        print("  test accuracy:\t\t{:.2f} %".format(
-                test_acc / test_batches * 100))
+            # After training, we compute and print the test error:
+            test_err = 0
+            test_acc = 0
+            test_batches = 0
+            for start_i in range(0, len(test_df), batch_size):
+                batched_df = test_df[start_i:start_i + batch_size]
+                ps, p_masks, hs, h_masks, labels = prepare(batched_df)
+                err, acc = val_fn(ps, p_masks, hs, h_masks, labels)
+                test_err += err
+                test_acc += acc
+                test_batches += 1
+            # print("Final results:")
+            print("  test loss:\t\t\t{:.6f}".format(test_err / test_batches))
+            print("  test accuracy:\t\t{:.2f} %".format(
+                    test_acc / test_batches * 100))
+            filename = './snli/{}_model_epoch{}.npz'.format(mode, epoch + 1)
+            print('saving to {}'.format(filename))
+            np.savez(filename,
+                     *lasagne.layers.get_all_param_values(l_softmax))
 
         # Optionally, you could now dump the network weights to a file like this:
         # np.savez('model.npz', *lasagne.layers.get_all_param_values(network))
@@ -333,7 +336,7 @@ if __name__ == '__main__':
             print('only supports [condition|attention|word_by_word]')
             sys.exit(1)
 
-    main(num_epochs=20, batch_size=128,
+    main(num_epochs=20, batch_size=64,
          load_previous=False,
          attention=attention,
          word_by_word=word_by_word,
