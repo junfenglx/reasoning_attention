@@ -14,6 +14,7 @@ Requirements
 ===========
 * Python 3
 * Lasagne
+* some others(best install Anaconda)
 
 Run
 ===
