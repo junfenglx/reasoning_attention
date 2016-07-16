@@ -166,7 +166,7 @@ def main(num_epochs=10, k=300, batch_size=30,
     p = 0.
     if p > 0.:
         print('apply dropout rate {} to decoder'.format(p))
-        decoder = lasagne.layers.DropoutLayer(mlstm, p)
+        mlstm = lasagne.layers.DropoutLayer(mlstm, p)
     l_softmax = lasagne.layers.DenseLayer(
             mlstm, num_units=3,
             nonlinearity=lasagne.nonlinearities.softmax)

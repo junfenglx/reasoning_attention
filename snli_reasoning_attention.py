@@ -141,11 +141,11 @@ def main(num_epochs=10, k=100, batch_size=128,
     print('unchanged_W.shape: {0}'.format(unchanged_W_shape))
     print('oov_in_train_W.shape: {0}'.format(oov_in_train_W_shape))
     # best hypoparameters
-    p = 0.1
-    # learning_rate = 0.001
-    learning_rate = 0.0003
-    l2_weight = 0.0003
-    # l2_weight = 0.
+    p = 0.2
+    learning_rate = 0.001
+    # learning_rate = 0.0003
+    # l2_weight = 0.0003
+    l2_weight = 0.
 
     l_premise = lasagne.layers.InputLayer(shape=(None, premise_max), input_var=premise_var)
     l_premise_mask = lasagne.layers.InputLayer(shape=(None, premise_max), input_var=premise_mask)
@@ -336,7 +336,8 @@ if __name__ == '__main__':
             print('only supports [condition|attention|word_by_word]')
             sys.exit(1)
 
-    main(num_epochs=20, batch_size=64,
+    main(num_epochs=20, batch_size=30,
+         display_freq=1000,
          load_previous=False,
          attention=attention,
          word_by_word=word_by_word,
