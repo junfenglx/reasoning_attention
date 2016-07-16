@@ -33,11 +33,19 @@ Or run:
 Results
 ======
 
+The learning curve of word by word attention:
+![wordbyword_attention](./wordbyword_attention_dropout0.2.png)
+
 The learning curve of match LSTM with word embedding:
 ![mlstm_word2vec_embedding](./mlstm_word2vec_embedding.png)
 
 Notes
 =====
+About word by word attention:
+
+1. The test acc of match LSTM is 1% smaller than the original paper, 82.31%
+
+
 About match LSTM:
 
 1. The test acc of match LSTM is 1% smaller than the original paper.
