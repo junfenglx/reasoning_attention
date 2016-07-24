@@ -16,7 +16,7 @@ import pandas as pd
 import theano
 import theano.tensor as T
 import lasagne
-from nltk import word_tokenize
+from nltk import TreebankWordTokenizer
 
 from custom_layers import CustomEmbedding, MatchLSTM, FakeFeatureDot2Layer
 
@@ -24,6 +24,7 @@ logging.basicConfig(format='%(asctime)s %(levelname)s %(message)s',
                     datefmt='%m/%d/%Y %I:%M:%S %p',
                     level=logging.DEBUG)
 logger = logging.getLogger(__name__)
+word_tokenize = TreebankWordTokenizer().tokenize
 
 
 class MatchLSTMModel(object):
