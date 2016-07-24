@@ -35,11 +35,17 @@ Results
 ======
 
 The learning curve of word by word attention(best test acc is at epoch 41):
+
 Epoch: 1-20
+
 ![wordbyword_attention](./wordbyword_attention_dropout0.2.png)
+
 Epoch: 20-39
+
 ![wordbyword_attention20_39](./wordbyword_attention_dropout0.2_after19.png)
+
 Epoch: 40-59
+
 ![wordbyword_attention40_59](./wordbyword_attention_dropout0.2_after39.png)
 
 The learning curve of match LSTM with word embedding:
