@@ -1,0 +1,1645 @@
+(root)junfeng@hadoop1:~/reasoning_attention$ python snli_reasoning_attention.py
+Loading data ...
+Loading train ...
+550152
+550149
+549364
+Loading dev ...
+10000
+10000
+9842
+Loading test ...
+10000
+10000
+9824
+num_epochs: 20
+k: 100
+batch_size: 30
+display_frequency: 1000
+save_frequency: 1000
+load previous: True
+attention: True
+word_by_word: True
+Building network ...
+unchanged_W.shape: (34283, 300)
+oov_in_train_W.shape: (9166, 300)
+apply dropout rate 0.2 to decoder
+loading previous saved model ...
+apply dropout mask id 139637048075544 to embedding matrix ...
+dropout rate is 0.2
+input var is hypo_var
+apply dropout mask id 139637048075544 to embedding matrix ...
+dropout rate is 0.2
+input var is premise_var
+Computing updates ...
+Compiling functions ...
+Training ...
+train_df.shape: (549364, 4)
+dev_df.shape: (9842, 4)
+test_df.shape: (9824, 4)
+Starting training...
+Seen 30000 samples, time used: 772.465s
+  current training loss:                0.376111
+  current training accuracy:            0.881067
+saving to ..., time used 772.465s
+Seen 60000 samples, time used: 1546.212s
+  current training loss:                0.371490
+  current training accuracy:            0.883733
+saving to ..., time used 773.302s
+Seen 90000 samples, time used: 2322.901s
+  current training loss:                0.371337
+  current training accuracy:            0.885244
+saving to ..., time used 776.229s
+Seen 120000 samples, time used: 3116.032s
+  current training loss:                0.369872
+  current training accuracy:            0.885933
+saving to ..., time used 792.683s
+Seen 150000 samples, time used: 3899.276s
+  current training loss:                0.370708
+  current training accuracy:            0.885320
+saving to ..., time used 782.765s
+Seen 180000 samples, time used: 4705.480s
+  current training loss:                0.370513
+  current training accuracy:            0.885694
+saving to ..., time used 805.677s
+Seen 210000 samples, time used: 5507.074s
+  current training loss:                0.369381
+  current training accuracy:            0.885905
+saving to ..., time used 801.166s
+Seen 240000 samples, time used: 6293.106s
+  current training loss:                0.369749
+  current training accuracy:            0.885775
+saving to ..., time used 785.602s
+Seen 270000 samples, time used: 7073.026s
+  current training loss:                0.368562
+  current training accuracy:            0.886059
+saving to ..., time used 779.506s
+Seen 300000 samples, time used: 7858.539s
+  current training loss:                0.368686
+  current training accuracy:            0.886127
+saving to ..., time used 785.065s
+Seen 330000 samples, time used: 8644.758s
+  current training loss:                0.368303
+  current training accuracy:            0.886318
+saving to ..., time used 785.736s
+Seen 360000 samples, time used: 9437.136s
+  current training loss:                0.367633
+  current training accuracy:            0.886511
+saving to ..., time used 791.951s
+Seen 390000 samples, time used: 10231.626s
+  current training loss:                0.368179
+  current training accuracy:            0.886397
+saving to ..., time used 794.036s
+Seen 420000 samples, time used: 11021.018s
+  current training loss:                0.368148
+  current training accuracy:            0.886314
+saving to ..., time used 788.956s
+Seen 450000 samples, time used: 11811.914s
+  current training loss:                0.367811
+  current training accuracy:            0.886358
+saving to ..., time used 790.458s
+Seen 480000 samples, time used: 12603.810s
+  current training loss:                0.367705
+  current training accuracy:            0.886521
+saving to ..., time used 791.421s
+Seen 510000 samples, time used: 13396.507s
+  current training loss:                0.367543
+  current training accuracy:            0.886665
+saving to ..., time used 792.271s
+Seen 540000 samples, time used: 14206.733s
+  current training loss:                0.367728
+  current training accuracy:            0.886702
+saving to ..., time used 809.789s
+Epoch 1 of 20 took 14478.708s
+  training loss:                0.367768
+  training accuracy:            88.67 %
+  validation loss:              0.431604
+  validation accuracy:          84.08 %
+  test loss:                    0.453171
+  test accuracy:                83.11 %
+saving to ./snli/word_by_word_model_epoch1_after39.npz
+Seen 30000 samples, time used: 807.416s
+  current training loss:                0.357281
+  current training accuracy:            0.892667
+saving to ..., time used 807.416s
+Seen 60000 samples, time used: 1599.954s
+  current training loss:                0.360998
+  current training accuracy:            0.890683
+saving to ..., time used 792.115s
+Seen 90000 samples, time used: 2391.799s
+  current training loss:                0.358948
+  current training accuracy:            0.891178
+saving to ..., time used 791.399s
+Seen 120000 samples, time used: 3184.697s
+  current training loss:                0.359616
+  current training accuracy:            0.890633
+saving to ..., time used 792.485s
+Seen 150000 samples, time used: 3979.054s
+  current training loss:                0.359701
+  current training accuracy:            0.890500
+saving to ..., time used 793.913s
+Seen 180000 samples, time used: 4778.542s
+  current training loss:                0.359934
+  current training accuracy:            0.890472
+saving to ..., time used 799.029s
+Seen 210000 samples, time used: 5580.439s
+  current training loss:                0.359879
+  current training accuracy:            0.890233
+saving to ..., time used 801.453s
+Seen 240000 samples, time used: 6381.081s
+  current training loss:                0.360460
+  current training accuracy:            0.889967
+saving to ..., time used 800.178s
+Seen 270000 samples, time used: 7183.186s
+  current training loss:                0.360813
+  current training accuracy:            0.890059
+saving to ..., time used 801.644s
+Seen 300000 samples, time used: 8001.251s
+  current training loss:                0.361593
+  current training accuracy:            0.889747
+saving to ..., time used 817.651s
+Seen 330000 samples, time used: 8810.476s
+  current training loss:                0.361335
+  current training accuracy:            0.889961
+saving to ..., time used 808.558s
+Seen 360000 samples, time used: 9626.806s
+  current training loss:                0.361268
+  current training accuracy:            0.889858
+saving to ..., time used 815.847s
+Seen 390000 samples, time used: 10426.962s
+  current training loss:                0.360973
+  current training accuracy:            0.890190
+saving to ..., time used 799.642s
+Seen 420000 samples, time used: 11221.378s
+  current training loss:                0.361405
+  current training accuracy:            0.890202
+saving to ..., time used 794.007s
+Seen 450000 samples, time used: 12024.756s
+  current training loss:                0.361312
+  current training accuracy:            0.890038
+saving to ..., time used 802.855s
+Seen 480000 samples, time used: 12826.992s
+  current training loss:                0.361562
+  current training accuracy:            0.889973
+saving to ..., time used 801.707s
+Seen 510000 samples, time used: 13632.533s
+  current training loss:                0.361626
+  current training accuracy:            0.889922
+saving to ..., time used 805.098s
+Seen 540000 samples, time used: 14436.846s
+  current training loss:                0.361840
+  current training accuracy:            0.889781
+saving to ..., time used 803.834s
+Epoch 2 of 20 took 14705.429s
+  training loss:                0.361815
+  training accuracy:            88.98 %
+  validation loss:              0.431216
+  validation accuracy:          84.21 %
+  test loss:                    0.452253
+  test accuracy:                83.29 %
+saving to ./snli/word_by_word_model_epoch2_after39.npz
+Seen 30000 samples, time used: 792.327s
+  current training loss:                0.361757
+  current training accuracy:            0.889967
+saving to ..., time used 792.327s
+Seen 60000 samples, time used: 1594.677s
+  current training loss:                0.358894
+  current training accuracy:            0.891083
+saving to ..., time used 801.917s
+Seen 90000 samples, time used: 2388.762s
+  current training loss:                0.358471
+  current training accuracy:            0.891600
+saving to ..., time used 793.641s
+Seen 120000 samples, time used: 3183.332s
+  current training loss:                0.356976
+  current training accuracy:            0.891983
+saving to ..., time used 794.104s
+Seen 150000 samples, time used: 3982.552s
+  current training loss:                0.356077
+  current training accuracy:            0.892620
+saving to ..., time used 798.720s
+Seen 180000 samples, time used: 4782.869s
+  current training loss:                0.357328
+  current training accuracy:            0.892306
+saving to ..., time used 799.871s
+Seen 210000 samples, time used: 5574.654s
+  current training loss:                0.357851
+  current training accuracy:            0.891952
+saving to ..., time used 791.336s
+Seen 240000 samples, time used: 6366.809s
+  current training loss:                0.357537
+  current training accuracy:            0.892271
+saving to ..., time used 791.717s
+Seen 270000 samples, time used: 7160.997s
+  current training loss:                0.357686
+  current training accuracy:            0.892267
+saving to ..., time used 793.665s
+Seen 300000 samples, time used: 7955.774s
+  current training loss:                0.358860
+  current training accuracy:            0.891853
+saving to ..., time used 794.317s
+Seen 330000 samples, time used: 8754.466s
+  current training loss:                0.359051
+  current training accuracy:            0.891697
+saving to ..., time used 798.249s
+Seen 360000 samples, time used: 9558.214s
+  current training loss:                0.358914
+  current training accuracy:            0.891811
+saving to ..., time used 803.293s
+Seen 390000 samples, time used: 10357.962s
+  current training loss:                0.358564
+  current training accuracy:            0.891982
+saving to ..., time used 799.339s
+Seen 420000 samples, time used: 11156.329s
+  current training loss:                0.358875
+  current training accuracy:            0.891845
+saving to ..., time used 797.938s
+Seen 450000 samples, time used: 11974.488s
+  current training loss:                0.358660
+  current training accuracy:            0.891742
+saving to ..., time used 817.708s
+Seen 480000 samples, time used: 12768.015s
+  current training loss:                0.358442
+  current training accuracy:            0.891750
+saving to ..., time used 793.059s
+Seen 510000 samples, time used: 13565.860s
+  current training loss:                0.358851
+  current training accuracy:            0.891547
+saving to ..., time used 797.415s
+Seen 540000 samples, time used: 14359.038s
+  current training loss:                0.358695
+  current training accuracy:            0.891643
+saving to ..., time used 792.727s
+Epoch 3 of 20 took 14631.733s
+  training loss:                0.358852
+  training accuracy:            89.15 %
+  validation loss:              0.435518
+  validation accuracy:          84.21 %
+  test loss:                    0.455253
+  test accuracy:                83.06 %
+saving to ./snli/word_by_word_model_epoch3_after39.npz
+Seen 30000 samples, time used: 792.401s
+  current training loss:                0.352957
+  current training accuracy:            0.893767
+saving to ..., time used 792.401s
+Seen 60000 samples, time used: 1593.805s
+  current training loss:                0.353513
+  current training accuracy:            0.893083
+saving to ..., time used 800.963s
+Seen 90000 samples, time used: 2392.468s
+  current training loss:                0.354836
+  current training accuracy:            0.892800
+saving to ..., time used 798.212s
+
+Seen 120000 samples, time used: 3195.323s
+  current training loss:                0.354034
+  current training accuracy:            0.892783
+saving to ..., time used 802.383s
+Seen 150000 samples, time used: 3988.335s
+  current training loss:                0.354450
+  current training accuracy:            0.893053
+saving to ..., time used 792.547s
+Seen 180000 samples, time used: 4809.775s
+  current training loss:                0.354555
+  current training accuracy:            0.893244
+saving to ..., time used 821.008s
+Seen 210000 samples, time used: 5610.234s
+  current training loss:                0.355293
+  current training accuracy:            0.893295
+saving to ..., time used 800.016s
+Seen 240000 samples, time used: 6409.233s
+  current training loss:                0.355354
+  current training accuracy:            0.893221
+saving to ..., time used 798.552s
+Seen 270000 samples, time used: 7213.195s
+  current training loss:                0.354142
+  current training accuracy:            0.893530
+saving to ..., time used 803.521s
+Seen 300000 samples, time used: 8009.180s
+  current training loss:                0.354647
+  current training accuracy:            0.893400
+saving to ..., time used 795.517s
+Seen 330000 samples, time used: 8811.173s
+  current training loss:                0.355748
+  current training accuracy:            0.893070
+saving to ..., time used 801.468s
+Seen 360000 samples, time used: 9607.489s
+  current training loss:                0.355999
+  current training accuracy:            0.892919
+saving to ..., time used 795.836s
+Seen 390000 samples, time used: 10405.823s
+  current training loss:                0.355769
+  current training accuracy:            0.892846
+saving to ..., time used 797.908s
+Seen 420000 samples, time used: 11204.766s
+  current training loss:                0.355948
+  current training accuracy:            0.892812
+saving to ..., time used 798.457s
+Seen 450000 samples, time used: 12007.348s
+  current training loss:                0.356007
+  current training accuracy:            0.892753
+saving to ..., time used 802.138s
+Seen 480000 samples, time used: 12806.198s
+  current training loss:                0.356273
+  current training accuracy:            0.892806
+saving to ..., time used 798.328s
+Seen 510000 samples, time used: 13603.298s
+  current training loss:                0.356353
+  current training accuracy:            0.892778
+saving to ..., time used 796.668s
+Seen 540000 samples, time used: 14406.092s
+  current training loss:                0.356681
+  current training accuracy:            0.892596
+saving to ..., time used 802.365s
+Epoch 4 of 20 took 14678.934s
+  training loss:                0.356535
+  training accuracy:            89.27 %
+  validation loss:              0.435105
+  validation accuracy:          84.07 %
+  test loss:                    0.455558
+  test accuracy:                83.18 %
+saving to ./snli/word_by_word_model_epoch4_after39.npz
+Seen 30000 samples, time used: 812.476s
+  current training loss:                0.348479
+  current training accuracy:            0.896233
+saving to ..., time used 812.477s
+Seen 60000 samples, time used: 1614.187s
+  current training loss:                0.353899
+  current training accuracy:            0.895500
+saving to ..., time used 801.194s
+Seen 90000 samples, time used: 2411.585s
+  current training loss:                0.354032
+  current training accuracy:            0.894778
+saving to ..., time used 796.967s
+Seen 120000 samples, time used: 3212.476s
+  current training loss:                0.352758
+  current training accuracy:            0.895125
+saving to ..., time used 800.453s
+Seen 150000 samples, time used: 4025.576s
+  current training loss:                0.353706
+  current training accuracy:            0.894813
+saving to ..., time used 812.678s
+Seen 180000 samples, time used: 4834.488s
+  current training loss:                0.354297
+  current training accuracy:            0.894844
+saving to ..., time used 808.415s
+Seen 210000 samples, time used: 5641.404s
+  current training loss:                0.354017
+  current training accuracy:            0.894790
+saving to ..., time used 806.408s
+Seen 240000 samples, time used: 6445.755s
+  current training loss:                0.353751
+  current training accuracy:            0.894692
+saving to ..., time used 803.871s
+Seen 270000 samples, time used: 7246.286s
+  current training loss:                0.354325
+  current training accuracy:            0.894533
+saving to ..., time used 800.105s
+Seen 300000 samples, time used: 8044.012s
+  current training loss:                0.354562
+  current training accuracy:            0.894290
+saving to ..., time used 797.303s
+Seen 330000 samples, time used: 8843.583s
+  current training loss:                0.354923
+  current training accuracy:            0.894036
+saving to ..., time used 799.069s
+Seen 360000 samples, time used: 9639.429s
+  current training loss:                0.355222
+  current training accuracy:            0.893931
+saving to ..., time used 795.428s
+Seen 390000 samples, time used: 10445.260s
+  current training loss:                0.355117
+  current training accuracy:            0.894010
+saving to ..., time used 805.439s
+Seen 420000 samples, time used: 11250.868s
+  current training loss:                0.355697
+  current training accuracy:            0.894002
+saving to ..., time used 805.178s
+Seen 450000 samples, time used: 12058.593s
+  current training loss:                0.355592
+  current training accuracy:            0.894031
+saving to ..., time used 807.275s
+Seen 480000 samples, time used: 12863.868s
+  current training loss:                0.355387
+  current training accuracy:            0.894075
+saving to ..., time used 804.764s
+Seen 510000 samples, time used: 13668.461s
+  current training loss:                0.355314
+  current training accuracy:            0.894069
+saving to ..., time used 804.145s
+Seen 540000 samples, time used: 14489.669s
+  current training loss:                0.355570
+  current training accuracy:            0.893931
+saving to ..., time used 820.776s
+Epoch 5 of 20 took 14765.166s
+  training loss:                0.355595
+  training accuracy:            89.39 %
+  validation loss:              0.437203
+  validation accuracy:          84.01 %
+  test loss:                    0.457508
+  test accuracy:                83.12 %
+saving to ./snli/word_by_word_model_epoch5_after39.npz
+Seen 30000 samples, time used: 807.037s
+  current training loss:                0.352003
+  current training accuracy:            0.894933
+saving to ..., time used 807.037s
+Seen 60000 samples, time used: 1614.468s
+  current training loss:                0.353023
+  current training accuracy:            0.894950
+saving to ..., time used 806.995s
+Seen 90000 samples, time used: 2425.787s
+  current training loss:                0.353111
+  current training accuracy:            0.895511
+saving to ..., time used 810.889s
+Seen 120000 samples, time used: 3237.131s
+  current training loss:                0.352404
+  current training accuracy:            0.895817
+saving to ..., time used 810.937s
+Seen 150000 samples, time used: 4058.244s
+  current training loss:                0.353033
+  current training accuracy:            0.895353
+saving to ..., time used 820.654s
+Seen 180000 samples, time used: 4867.802s
+  current training loss:                0.353591
+  current training accuracy:            0.895044
+saving to ..., time used 809.087s
+Seen 210000 samples, time used: 5677.284s
+  current training loss:                0.354187
+  current training accuracy:            0.894843
+saving to ..., time used 809.022s
+Seen 240000 samples, time used: 6487.472s
+  current training loss:                0.354323
+  current training accuracy:            0.894658
+saving to ..., time used 809.757s
+Seen 270000 samples, time used: 7288.349s
+  current training loss:                0.353852
+  current training accuracy:            0.894804
+saving to ..., time used 800.371s
+Seen 300000 samples, time used: 8102.470s
+  current training loss:                0.354524
+  current training accuracy:            0.894497
+saving to ..., time used 813.693s
+Seen 330000 samples, time used: 8914.090s
+  current training loss:                0.353886
+  current training accuracy:            0.894824
+saving to ..., time used 811.196s
+Seen 360000 samples, time used: 9714.678s
+  current training loss:                0.353803
+  current training accuracy:            0.894817
+saving to ..., time used 800.135s
+Seen 390000 samples, time used: 10525.183s
+  current training loss:                0.353389
+  current training accuracy:            0.894990
+saving to ..., time used 810.009s
+Seen 420000 samples, time used: 11331.595s
+  current training loss:                0.353805
+  current training accuracy:            0.894740
+saving to ..., time used 805.982s
+Seen 450000 samples, time used: 12140.436s
+  current training loss:                0.354112
+  current training accuracy:            0.894744
+saving to ..., time used 808.411s
+Seen 480000 samples, time used: 12952.855s
+  current training loss:                0.353818
+  current training accuracy:            0.894900
+saving to ..., time used 811.972s
+Seen 510000 samples, time used: 13754.163s
+  current training loss:                0.353794
+  current training accuracy:            0.894910
+saving to ..., time used 800.854s
+Seen 540000 samples, time used: 14556.794s
+  current training loss:                0.353913
+  current training accuracy:            0.894850
+saving to ..., time used 802.212s
+Epoch 6 of 20 took 14831.828s
+  training loss:                0.353938
+  training accuracy:            89.48 %
+  validation loss:              0.433642
+  validation accuracy:          84.05 %
+  test loss:                    0.453347
+  test accuracy:                83.28 %
+saving to ./snli/word_by_word_model_epoch6_after39.npz
+Seen 30000 samples, time used: 802.211s
+  current training loss:                0.348464
+  current training accuracy:            0.896667
+saving to ..., time used 802.211s
+Seen 60000 samples, time used: 1603.887s
+  current training loss:                0.349946
+  current training accuracy:            0.896683
+saving to ..., time used 801.198s
+Seen 90000 samples, time used: 2408.057s
+  current training loss:                0.346898
+  current training accuracy:            0.898222
+saving to ..., time used 803.725s
+Seen 120000 samples, time used: 3214.484s
+  current training loss:                0.348603
+  current training accuracy:            0.897775
+saving to ..., time used 805.978s
+Seen 150000 samples, time used: 4022.579s
+  current training loss:                0.349408
+  current training accuracy:            0.897773
+saving to ..., time used 807.640s
+Seen 180000 samples, time used: 4830.948s
+  current training loss:                0.350435
+  current training accuracy:            0.897372
+saving to ..., time used 807.935s
+Seen 210000 samples, time used: 5637.079s
+  current training loss:                0.350413
+  current training accuracy:            0.897167
+saving to ..., time used 805.641s
+Seen 240000 samples, time used: 6461.554s
+  current training loss:                0.351323
+  current training accuracy:            0.896750
+saving to ..., time used 824.014s
+Seen 270000 samples, time used: 7274.008s
+  current training loss:                0.351288
+  current training accuracy:            0.896707
+saving to ..., time used 811.941s
+Seen 300000 samples, time used: 8078.488s
+  current training loss:                0.351976
+  current training accuracy:            0.896337
+saving to ..., time used 804.048s
+Seen 330000 samples, time used: 8888.908s
+  current training loss:                0.351678
+  current training accuracy:            0.896521
+saving to ..., time used 809.965s
+Seen 360000 samples, time used: 9708.029s
+  current training loss:                0.352106
+  current training accuracy:            0.896389
+saving to ..., time used 818.663s
+Seen 390000 samples, time used: 10531.428s
+  current training loss:                0.352010
+  current training accuracy:            0.896362
+saving to ..., time used 822.972s
+Seen 420000 samples, time used: 11342.183s
+  current training loss:                0.352517
+  current training accuracy:            0.895957
+saving to ..., time used 810.332s
+Seen 450000 samples, time used: 12146.588s
+  current training loss:                0.352498
+  current training accuracy:            0.895964
+saving to ..., time used 803.954s
+Seen 480000 samples, time used: 12959.630s
+  current training loss:                0.352176
+  current training accuracy:            0.895994
+saving to ..., time used 812.574s
+Seen 510000 samples, time used: 13769.690s
+  current training loss:                0.352418
+  current training accuracy:            0.895951
+saving to ..., time used 809.639s
+Seen 540000 samples, time used: 14571.530s
+  current training loss:                0.352737
+  current training accuracy:            0.895800
+saving to ..., time used 801.417s
+Epoch 7 of 20 took 14848.003s
+  training loss:                0.352637
+  training accuracy:            89.58 %
+  validation loss:              0.434965
+  validation accuracy:          83.95 %
+  test loss:                    0.459140
+  test accuracy:                83.26 %
+saving to ./snli/word_by_word_model_epoch7_after39.npz
+Seen 30000 samples, time used: 798.926s
+  current training loss:                0.353565
+  current training accuracy:            0.896133
+saving to ..., time used 798.926s
+Seen 60000 samples, time used: 1614.099s
+  current training loss:                0.351650
+  current training accuracy:            0.897200
+saving to ..., time used 814.661s
+Seen 90000 samples, time used: 2410.437s
+  current training loss:                0.350782
+  current training accuracy:            0.897311
+saving to ..., time used 795.888s
+Seen 120000 samples, time used: 3209.772s
+  current training loss:                0.352115
+  current training accuracy:            0.896467
+saving to ..., time used 798.819s
+Seen 150000 samples, time used: 4014.486s
+  current training loss:                0.352137
+  current training accuracy:            0.896260
+saving to ..., time used 804.254s
+Seen 180000 samples, time used: 4817.625s
+  current training loss:                0.352050
+  current training accuracy:            0.896350
+saving to ..., time used 802.706s
+Seen 210000 samples, time used: 5625.270s
+  current training loss:                0.351566
+  current training accuracy:            0.896510
+saving to ..., time used 807.204s
+Seen 240000 samples, time used: 6436.202s
+  current training loss:                0.350596
+  current training accuracy:            0.896842
+saving to ..., time used 810.426s
+Seen 270000 samples, time used: 7244.409s
+  current training loss:                0.350895
+  current training accuracy:            0.896641
+saving to ..., time used 807.774s
+Seen 300000 samples, time used: 8065.680s
+  current training loss:                0.350422
+  current training accuracy:            0.896503
+saving to ..., time used 820.816s
+Seen 330000 samples, time used: 8875.494s
+  current training loss:                0.350624
+  current training accuracy:            0.896470
+saving to ..., time used 809.380s
+Seen 360000 samples, time used: 9674.303s
+  current training loss:                0.350722
+  current training accuracy:            0.896481
+saving to ..., time used 798.371s
+Seen 390000 samples, time used: 10470.065s
+  current training loss:                0.351010
+  current training accuracy:            0.896544
+saving to ..., time used 795.328s
+Seen 420000 samples, time used: 11273.769s
+  current training loss:                0.351228
+  current training accuracy:            0.896438
+saving to ..., time used 803.253s
+Seen 450000 samples, time used: 12087.659s
+  current training loss:                0.351393
+  current training accuracy:            0.896284
+saving to ..., time used 813.466s
+Seen 480000 samples, time used: 12898.746s
+  current training loss:                0.351321
+  current training accuracy:            0.896277
+saving to ..., time used 810.586s
+Seen 510000 samples, time used: 13711.289s
+  current training loss:                0.350908
+  current training accuracy:            0.896347
+saving to ..., time used 812.112s
+Seen 540000 samples, time used: 14523.662s
+  current training loss:                0.350836
+  current training accuracy:            0.896283
+saving to ..., time used 811.948s
+Epoch 8 of 20 took 14800.176s
+  training loss:                0.350882
+  training accuracy:            89.63 %
+  validation loss:              0.433298
+  validation accuracy:          84.17 %
+  test loss:                    0.458246
+  test accuracy:                83.16 %
+saving to ./snli/word_by_word_model_epoch8_after39.npz
+Seen 30000 samples, time used: 804.515s
+  current training loss:                0.349243
+  current training accuracy:            0.898333
+saving to ..., time used 804.515s
+Seen 60000 samples, time used: 1613.991s
+  current training loss:                0.348264
+  current training accuracy:            0.897417
+saving to ..., time used 809.033s
+Seen 90000 samples, time used: 2428.013s
+  current training loss:                0.347953
+  current training accuracy:            0.896967
+saving to ..., time used 813.552s
+Seen 120000 samples, time used: 3241.638s
+  current training loss:                0.346496
+  current training accuracy:            0.897292
+saving to ..., time used 813.139s
+Seen 150000 samples, time used: 4050.661s
+  current training loss:                0.346507
+  current training accuracy:            0.897620
+saving to ..., time used 808.605s
+Seen 180000 samples, time used: 4872.074s
+  current training loss:                0.346331
+  current training accuracy:            0.898072
+saving to ..., time used 820.926s
+Seen 210000 samples, time used: 5694.398s
+  current training loss:                0.347044
+  current training accuracy:            0.897948
+saving to ..., time used 821.879s
+Seen 240000 samples, time used: 6511.896s
+  current training loss:                0.346473
+  current training accuracy:            0.898175
+saving to ..., time used 817.042s
+Seen 270000 samples, time used: 7321.816s
+  current training loss:                0.346858
+  current training accuracy:            0.897837
+saving to ..., time used 809.469s
+Seen 300000 samples, time used: 8140.124s
+  current training loss:                0.346886
+  current training accuracy:            0.897867
+saving to ..., time used 817.848s
+Seen 330000 samples, time used: 8961.709s
+  current training loss:                0.347172
+  current training accuracy:            0.897697
+saving to ..., time used 821.138s
+Seen 360000 samples, time used: 9773.707s
+  current training loss:                0.347456
+  current training accuracy:            0.897764
+saving to ..., time used 811.560s
+Seen 390000 samples, time used: 10582.447s
+  current training loss:                0.347592
+  current training accuracy:            0.897526
+saving to ..., time used 808.317s
+Seen 420000 samples, time used: 11390.363s
+  current training loss:                0.347822
+  current training accuracy:            0.897502
+saving to ..., time used 807.476s
+Seen 450000 samples, time used: 12200.465s
+  current training loss:                0.348473
+  current training accuracy:            0.897151
+saving to ..., time used 809.647s
+Seen 480000 samples, time used: 12993.904s
+  current training loss:                0.348754
+  current training accuracy:            0.897081
+saving to ..., time used 793.002s
+Seen 510000 samples, time used: 13825.361s
+  current training loss:                0.349759
+  current training accuracy:            0.896792
+saving to ..., time used 831.032s
+Seen 540000 samples, time used: 14627.892s
+  current training loss:                0.349783
+  current training accuracy:            0.896881
+saving to ..., time used 802.086s
+Epoch 9 of 20 took 14904.776s
+  training loss:                0.349786
+  training accuracy:            89.68 %
+  validation loss:              0.434796
+  validation accuracy:          83.85 %
+  test loss:                    0.455457
+  test accuracy:                83.20 %
+saving to ./snli/word_by_word_model_epoch9_after39.npz
+Seen 30000 samples, time used: 814.081s
+  current training loss:                0.344011
+  current training accuracy:            0.900400
+saving to ..., time used 814.081s
+Seen 60000 samples, time used: 1637.870s
+  current training loss:                0.343127
+  current training accuracy:            0.901067
+saving to ..., time used 823.387s
+Seen 90000 samples, time used: 2459.155s
+  current training loss:                0.345758
+  current training accuracy:            0.900156
+saving to ..., time used 820.779s
+Seen 120000 samples, time used: 3278.455s
+  current training loss:                0.344045
+  current training accuracy:            0.900208
+saving to ..., time used 818.811s
+Seen 150000 samples, time used: 4086.483s
+  current training loss:                0.346297
+  current training accuracy:            0.898967
+saving to ..., time used 807.517s
+Seen 180000 samples, time used: 4902.322s
+  current training loss:                0.346222
+  current training accuracy:            0.898606
+saving to ..., time used 815.434s
+Seen 210000 samples, time used: 5715.834s
+  current training loss:                0.346298
+  current training accuracy:            0.898643
+saving to ..., time used 813.079s
+Seen 240000 samples, time used: 6531.787s
+  current training loss:                0.346439
+  current training accuracy:            0.898504
+saving to ..., time used 815.503s
+Seen 270000 samples, time used: 7351.127s
+  current training loss:                0.346688
+  current training accuracy:            0.898426
+saving to ..., time used 818.909s
+Seen 300000 samples, time used: 8158.464s
+  current training loss:                0.346181
+  current training accuracy:            0.898537
+saving to ..., time used 806.906s
+Seen 330000 samples, time used: 8968.790s
+  current training loss:                0.346470
+  current training accuracy:            0.898488
+saving to ..., time used 809.887s
+Seen 360000 samples, time used: 9775.579s
+  current training loss:                0.346734
+  current training accuracy:            0.898344
+saving to ..., time used 806.343s
+Seen 390000 samples, time used: 10583.081s
+  current training loss:                0.346525
+  current training accuracy:            0.898367
+saving to ..., time used 807.023s
+Seen 420000 samples, time used: 11401.227s
+  current training loss:                0.347391
+  current training accuracy:            0.898224
+saving to ..., time used 817.720s
+Seen 450000 samples, time used: 12204.437s
+  current training loss:                0.347670
+  current training accuracy:            0.897967
+saving to ..., time used 802.713s
+Seen 480000 samples, time used: 13015.873s
+  current training loss:                0.347920
+  current training accuracy:            0.897773
+saving to ..., time used 810.964s
+Seen 510000 samples, time used: 13829.559s
+  current training loss:                0.348266
+  current training accuracy:            0.897625
+saving to ..., time used 813.249s
+Seen 540000 samples, time used: 14639.260s
+  current training loss:                0.348697
+  current training accuracy:            0.897485
+saving to ..., time used 809.272s
+Epoch 10 of 20 took 14915.062s
+  training loss:                0.348797
+  training accuracy:            89.74 %
+  validation loss:              0.435863
+  validation accuracy:          84.03 %
+  test loss:                    0.458012
+  test accuracy:                82.91 %
+saving to ./snli/word_by_word_model_epoch10_after39.npz
+Seen 30000 samples, time used: 807.706s
+  current training loss:                0.344415
+  current training accuracy:            0.899300
+saving to ..., time used 807.706s
+Seen 60000 samples, time used: 1610.580s
+  current training loss:                0.346751
+  current training accuracy:            0.899517
+saving to ..., time used 802.445s
+Seen 90000 samples, time used: 2419.225s
+  current training loss:                0.344966
+  current training accuracy:            0.900722
+saving to ..., time used 808.236s
+Seen 120000 samples, time used: 3229.060s
+  current training loss:                0.344416
+  current training accuracy:            0.900408
+saving to ..., time used 809.381s
+Seen 150000 samples, time used: 4027.957s
+  current training loss:                0.345339
+  current training accuracy:            0.900260
+saving to ..., time used 798.459s
+Seen 180000 samples, time used: 4848.286s
+  current training loss:                0.344903
+  current training accuracy:            0.900206
+saving to ..., time used 819.838s
+Seen 210000 samples, time used: 5659.234s
+  current training loss:                0.345241
+  current training accuracy:            0.900143
+saving to ..., time used 810.511s
+Seen 240000 samples, time used: 6460.805s
+  current training loss:                0.345680
+  current training accuracy:            0.899892
+saving to ..., time used 801.117s
+Seen 270000 samples, time used: 7264.044s
+  current training loss:                0.346791
+  current training accuracy:            0.899481
+saving to ..., time used 802.785s
+Seen 300000 samples, time used: 8073.710s
+  current training loss:                0.347422
+  current training accuracy:            0.899053
+saving to ..., time used 809.190s
+Seen 330000 samples, time used: 8881.999s
+  current training loss:                0.347771
+  current training accuracy:            0.898852
+saving to ..., time used 807.845s
+Seen 360000 samples, time used: 9697.343s
+  current training loss:                0.347771
+  current training accuracy:            0.898775
+saving to ..., time used 814.914s
+Seen 390000 samples, time used: 10510.974s
+  current training loss:                0.347859
+  current training accuracy:            0.898554
+saving to ..., time used 813.187s
+Seen 420000 samples, time used: 11317.349s
+  current training loss:                0.348136
+  current training accuracy:            0.898300
+saving to ..., time used 805.918s
+Seen 450000 samples, time used: 12129.348s
+  current training loss:                0.348493
+  current training accuracy:            0.898144
+saving to ..., time used 811.569s
+Seen 480000 samples, time used: 12955.556s
+  current training loss:                0.348839
+  current training accuracy:            0.897829
+saving to ..., time used 825.771s
+Seen 510000 samples, time used: 13767.848s
+  current training loss:                0.348631
+  current training accuracy:            0.897935
+saving to ..., time used 811.844s
+Seen 540000 samples, time used: 14587.532s
+  current training loss:                0.348835
+  current training accuracy:            0.897846
+saving to ..., time used 819.235s
+Epoch 11 of 20 took 14872.494s
+  training loss:                0.348760
+  training accuracy:            89.79 %
+  validation loss:              0.436031
+  validation accuracy:          83.86 %
+  test loss:                    0.459233
+  test accuracy:                83.15 %
+saving to ./snli/word_by_word_model_epoch11_after39.npz
+
+Seen 30000 samples, time used: 801.203s
+  current training loss:                0.343823
+  current training accuracy:            0.899900
+saving to ..., time used 801.203s
+Seen 60000 samples, time used: 1603.202s
+  current training loss:                0.347931
+  current training accuracy:            0.899583
+saving to ..., time used 801.553s
+Seen 90000 samples, time used: 2401.213s
+  current training loss:                0.347663
+  current training accuracy:            0.899444
+saving to ..., time used 797.576s
+Seen 120000 samples, time used: 3209.423s
+  current training loss:                0.347039
+  current training accuracy:            0.899033
+saving to ..., time used 807.736s
+Seen 150000 samples, time used: 4006.997s
+  current training loss:                0.346992
+  current training accuracy:            0.898760
+saving to ..., time used 797.151s
+Seen 180000 samples, time used: 4797.539s
+  current training loss:                0.346845
+  current training accuracy:            0.899061
+saving to ..., time used 790.084s
+Seen 210000 samples, time used: 5617.171s
+  current training loss:                0.345870
+  current training accuracy:            0.899762
+saving to ..., time used 819.181s
+Seen 240000 samples, time used: 6440.281s
+  current training loss:                0.346300
+  current training accuracy:            0.899687
+saving to ..., time used 822.572s
+Seen 270000 samples, time used: 7263.230s
+  current training loss:                0.346700
+  current training accuracy:            0.899641
+saving to ..., time used 822.526s
+Seen 300000 samples, time used: 8063.709s
+  current training loss:                0.346581
+  current training accuracy:            0.899587
+saving to ..., time used 800.025s
+Seen 330000 samples, time used: 8885.563s
+  current training loss:                0.347082
+  current training accuracy:            0.899173
+saving to ..., time used 821.431s
+Seen 360000 samples, time used: 9701.192s
+  current training loss:                0.347010
+  current training accuracy:            0.899081
+saving to ..., time used 815.178s
+Seen 390000 samples, time used: 10509.307s
+  current training loss:                0.347271
+  current training accuracy:            0.898795
+saving to ..., time used 807.632s
+Seen 420000 samples, time used: 11312.155s
+  current training loss:                0.347334
+  current training accuracy:            0.898821
+saving to ..., time used 802.379s
+Seen 450000 samples, time used: 12107.852s
+  current training loss:                0.347102
+  current training accuracy:            0.898813
+saving to ..., time used 795.195s
+Seen 480000 samples, time used: 12907.069s
+  current training loss:                0.347189
+  current training accuracy:            0.898815
+saving to ..., time used 798.733s
+Seen 510000 samples, time used: 13705.836s
+  current training loss:                0.347062
+  current training accuracy:            0.898761
+saving to ..., time used 798.301s
+Seen 540000 samples, time used: 14517.245s
+  current training loss:                0.347075
+  current training accuracy:            0.898593
+saving to ..., time used 810.912s
+Epoch 12 of 20 took 14788.680s
+  training loss:                0.347160
+  training accuracy:            89.85 %
+  validation loss:              0.435999
+  validation accuracy:          83.99 %
+  test loss:                    0.456911
+  test accuracy:                83.10 %
+saving to ./snli/word_by_word_model_epoch12_after39.npz
+Seen 30000 samples, time used: 798.330s
+  current training loss:                0.344770
+  current training accuracy:            0.902233
+saving to ..., time used 798.330s
+Seen 60000 samples, time used: 1620.847s
+  current training loss:                0.343542
+  current training accuracy:            0.901783
+saving to ..., time used 822.086s
+Seen 90000 samples, time used: 2432.778s
+  current training loss:                0.343953
+  current training accuracy:            0.900689
+saving to ..., time used 811.487s
+Seen 120000 samples, time used: 3234.449s
+  current training loss:                0.342564
+  current training accuracy:            0.900700
+saving to ..., time used 801.191s
+Seen 150000 samples, time used: 4034.360s
+  current training loss:                0.344544
+  current training accuracy:            0.900320
+saving to ..., time used 799.478s
+Seen 180000 samples, time used: 4835.223s
+  current training loss:                0.344524
+  current training accuracy:            0.900150
+saving to ..., time used 800.438s
+Seen 210000 samples, time used: 5654.262s
+  current training loss:                0.346129
+  current training accuracy:            0.899371
+saving to ..., time used 818.577s
+Seen 240000 samples, time used: 6461.704s
+  current training loss:                0.346495
+  current training accuracy:            0.899346
+saving to ..., time used 807.008s
+Seen 270000 samples, time used: 7263.337s
+  current training loss:                0.346585
+  current training accuracy:            0.899259
+saving to ..., time used 801.199s
+Seen 300000 samples, time used: 8087.887s
+  current training loss:                0.346670
+  current training accuracy:            0.899333
+saving to ..., time used 824.118s
+Seen 330000 samples, time used: 8887.939s
+  current training loss:                0.345855
+  current training accuracy:            0.899527
+saving to ..., time used 799.593s
+Seen 360000 samples, time used: 9687.647s
+  current training loss:                0.345992
+  current training accuracy:            0.899211
+saving to ..., time used 799.242s
+Seen 390000 samples, time used: 10507.904s
+  current training loss:                0.345924
+  current training accuracy:            0.899159
+saving to ..., time used 819.779s
+Seen 420000 samples, time used: 11304.148s
+  current training loss:                0.345635
+  current training accuracy:            0.899019
+saving to ..., time used 795.773s
+Seen 450000 samples, time used: 12109.131s
+  current training loss:                0.345791
+  current training accuracy:            0.899011
+saving to ..., time used 804.554s
+Seen 480000 samples, time used: 12908.789s
+  current training loss:                0.345812
+  current training accuracy:            0.899077
+saving to ..., time used 799.229s
+Seen 510000 samples, time used: 13719.540s
+  current training loss:                0.345961
+  current training accuracy:            0.899039
+saving to ..., time used 810.268s
+Seen 540000 samples, time used: 14531.547s
+  current training loss:                0.346097
+  current training accuracy:            0.898981
+saving to ..., time used 811.557s
+Epoch 13 of 20 took 14806.176s
+  training loss:                0.346371
+  training accuracy:            89.89 %
+  validation loss:              0.435806
+  validation accuracy:          83.82 %
+  test loss:                    0.454969
+  test accuracy:                83.24 %
+saving to ./snli/word_by_word_model_epoch13_after39.npz
+Seen 30000 samples, time used: 797.307s
+  current training loss:                0.345193
+  current training accuracy:            0.900067
+saving to ..., time used 797.307s
+Seen 60000 samples, time used: 1603.110s
+  current training loss:                0.342470
+  current training accuracy:            0.900600
+saving to ..., time used 805.336s
+Seen 90000 samples, time used: 2403.308s
+  current training loss:                0.344584
+  current training accuracy:            0.900356
+saving to ..., time used 799.696s
+Seen 120000 samples, time used: 3204.241s
+  current training loss:                0.341935
+  current training accuracy:            0.901508
+saving to ..., time used 800.476s
+Seen 150000 samples, time used: 4006.876s
+  current training loss:                0.344784
+  current training accuracy:            0.900767
+saving to ..., time used 802.210s
+Seen 180000 samples, time used: 4808.148s
+  current training loss:                0.343961
+  current training accuracy:            0.901111
+saving to ..., time used 800.802s
+Seen 210000 samples, time used: 5607.107s
+  current training loss:                0.344183
+  current training accuracy:            0.901024
+saving to ..., time used 798.545s
+Seen 240000 samples, time used: 6407.988s
+  current training loss:                0.344325
+  current training accuracy:            0.900471
+saving to ..., time used 800.388s
+Seen 270000 samples, time used: 7209.776s
+  current training loss:                0.344400
+  current training accuracy:            0.900263
+saving to ..., time used 801.312s
+Seen 300000 samples, time used: 8008.604s
+  current training loss:                0.344034
+  current training accuracy:            0.900183
+saving to ..., time used 798.389s
+Seen 330000 samples, time used: 8812.917s
+  current training loss:                0.344376
+  current training accuracy:            0.899970
+saving to ..., time used 803.851s
+Seen 360000 samples, time used: 9616.804s
+  current training loss:                0.344598
+  current training accuracy:            0.899886
+saving to ..., time used 803.406s
+Seen 390000 samples, time used: 10423.773s
+  current training loss:                0.345027
+  current training accuracy:            0.899682
+saving to ..., time used 806.555s
+Seen 420000 samples, time used: 11242.638s
+  current training loss:                0.344765
+  current training accuracy:            0.899693
+saving to ..., time used 818.416s
+Seen 450000 samples, time used: 12061.215s
+  current training loss:                0.345260
+  current training accuracy:            0.899498
+saving to ..., time used 818.143s
+Seen 480000 samples, time used: 12893.407s
+  current training loss:                0.345310
+  current training accuracy:            0.899442
+saving to ..., time used 831.730s
+Seen 510000 samples, time used: 13708.507s
+  current training loss:                0.345577
+  current training accuracy:            0.899298
+saving to ..., time used 814.670s
+Seen 540000 samples, time used: 14516.803s
+  current training loss:                0.345723
+  current training accuracy:            0.899298
+saving to ..., time used 807.856s
+Epoch 14 of 20 took 14792.460s
+  training loss:                0.345761
+  training accuracy:            89.93 %
+  validation loss:              0.437496
+  validation accuracy:          84.02 %
+  test loss:                    0.457956
+  test accuracy:                83.12 %
+saving to ./snli/word_by_word_model_epoch14_after39.npz
+Seen 30000 samples, time used: 818.077s
+  current training loss:                0.344500
+  current training accuracy:            0.900733
+saving to ..., time used 818.077s
+Seen 60000 samples, time used: 1637.834s
+  current training loss:                0.343098
+  current training accuracy:            0.900817
+saving to ..., time used 819.290s
+Seen 90000 samples, time used: 2453.344s
+  current training loss:                0.344110
+  current training accuracy:            0.901078
+saving to ..., time used 815.070s
+Seen 120000 samples, time used: 3270.922s
+  current training loss:                0.343448
+  current training accuracy:            0.901567
+saving to ..., time used 817.145s
+Seen 150000 samples, time used: 4092.173s
+  current training loss:                0.342620
+  current training accuracy:            0.901587
+saving to ..., time used 820.821s
+Seen 180000 samples, time used: 4922.153s
+  current training loss:                0.343699
+  current training accuracy:            0.900806
+saving to ..., time used 829.520s
+Seen 210000 samples, time used: 5742.158s
+  current training loss:                0.343294
+  current training accuracy:            0.900695
+saving to ..., time used 819.514s
+Seen 240000 samples, time used: 6557.791s
+  current training loss:                0.343579
+  current training accuracy:            0.900492
+saving to ..., time used 815.187s
+Seen 270000 samples, time used: 7381.066s
+  current training loss:                0.343395
+  current training accuracy:            0.900352
+saving to ..., time used 822.776s
+Seen 300000 samples, time used: 8198.445s
+  current training loss:                0.343315
+  current training accuracy:            0.900383
+saving to ..., time used 816.865s
+Seen 330000 samples, time used: 9033.027s
+  current training loss:                0.343746
+  current training accuracy:            0.900161
+saving to ..., time used 834.132s
+Seen 360000 samples, time used: 9866.769s
+  current training loss:                0.344117
+  current training accuracy:            0.900031
+saving to ..., time used 833.307s
+Seen 390000 samples, time used: 10691.405s
+  current training loss:                0.343944
+  current training accuracy:            0.899851
+saving to ..., time used 824.218s
+Seen 420000 samples, time used: 11513.716s
+  current training loss:                0.343909
+  current training accuracy:            0.899950
+saving to ..., time used 821.829s
+Seen 450000 samples, time used: 12326.314s
+  current training loss:                0.344383
+  current training accuracy:            0.899729
+saving to ..., time used 812.173s
+Seen 480000 samples, time used: 13137.592s
+  current training loss:                0.344326
+  current training accuracy:            0.899810
+saving to ..., time used 810.882s
+Seen 510000 samples, time used: 13949.167s
+  current training loss:                0.344376
+  current training accuracy:            0.899767
+saving to ..., time used 811.115s
+
+Seen 540000 samples, time used: 14767.309s
+  current training loss:                0.344479
+  current training accuracy:            0.899843
+saving to ..., time used 817.676s
+Epoch 15 of 20 took 15052.528s
+  training loss:                0.344524
+  training accuracy:            89.99 %
+  validation loss:              0.438866
+  validation accuracy:          83.89 %
+  test loss:                    0.460725
+  test accuracy:                82.98 %
+saving to ./snli/word_by_word_model_epoch15_after39.npz
+Seen 30000 samples, time used: 823.600s
+  current training loss:                0.337248
+  current training accuracy:            0.902400
+saving to ..., time used 823.600s
+Seen 60000 samples, time used: 1627.307s
+  current training loss:                0.339088
+  current training accuracy:            0.902467
+saving to ..., time used 803.264s
+
+Seen 90000 samples, time used: 2429.170s
+  current training loss:                0.339323
+  current training accuracy:            0.902667
+saving to ..., time used 801.369s
+Seen 120000 samples, time used: 3240.251s
+  current training loss:                0.340351
+  current training accuracy:            0.901925
+saving to ..., time used 810.645s
+Seen 150000 samples, time used: 4044.932s
+  current training loss:                0.341659
+  current training accuracy:            0.901600
+saving to ..., time used 804.262s
+Seen 180000 samples, time used: 4848.516s
+  current training loss:                0.342417
+  current training accuracy:            0.901050
+saving to ..., time used 803.146s
+Seen 210000 samples, time used: 5654.026s
+  current training loss:                0.342223
+  current training accuracy:            0.901300
+saving to ..., time used 805.066s
+
+Seen 240000 samples, time used: 6464.807s
+  current training loss:                0.342317
+  current training accuracy:            0.901200
+saving to ..., time used 810.338s
+Seen 270000 samples, time used: 7264.761s
+  current training loss:                0.342733
+  current training accuracy:            0.900963
+saving to ..., time used 799.435s
+Seen 300000 samples, time used: 8072.387s
+  current training loss:                0.342878
+  current training accuracy:            0.900847
+saving to ..., time used 807.177s
+Seen 330000 samples, time used: 8881.581s
+  current training loss:                0.343089
+  current training accuracy:            0.900688
+saving to ..., time used 808.776s
+Seen 360000 samples, time used: 9686.067s
+  current training loss:                0.343072
+  current training accuracy:            0.900625
+saving to ..., time used 804.045s
+Seen 390000 samples, time used: 10519.954s
+  current training loss:                0.343388
+  current training accuracy:            0.900567
+saving to ..., time used 833.440s
+Seen 420000 samples, time used: 11331.546s
+  current training loss:                0.343600
+  current training accuracy:            0.900519
+saving to ..., time used 811.108s
+Seen 450000 samples, time used: 12140.191s
+  current training loss:                0.343876
+  current training accuracy:            0.900449
+saving to ..., time used 808.089s
+Seen 480000 samples, time used: 12952.953s
+  current training loss:                0.343819
+  current training accuracy:            0.900479
+saving to ..., time used 812.329s
+Seen 510000 samples, time used: 13768.154s
+  current training loss:                0.344274
+  current training accuracy:            0.900406
+saving to ..., time used 814.754s
+Seen 540000 samples, time used: 14598.378s
+  current training loss:                0.344397
+  current training accuracy:            0.900324
+saving to ..., time used 829.706s
+Epoch 16 of 20 took 14892.931s
+  training loss:                0.344409
+  training accuracy:            90.03 %
+  validation loss:              0.435647
+  validation accuracy:          84.05 %
+  test loss:                    0.457922
+  test accuracy:                83.10 %
+saving to ./snli/word_by_word_model_epoch16_after39.npz
+Seen 30000 samples, time used: 811.255s
+  current training loss:                0.339628
+  current training accuracy:            0.901467
+saving to ..., time used 811.255s
+Seen 60000 samples, time used: 1620.126s
+  current training loss:                0.340676
+  current training accuracy:            0.901333
+saving to ..., time used 808.090s
+Seen 90000 samples, time used: 2436.145s
+  current training loss:                0.341955
+  current training accuracy:            0.901533
+saving to ..., time used 815.537s
+Seen 120000 samples, time used: 3250.079s
+  current training loss:                0.341608
+  current training accuracy:            0.901708
+saving to ..., time used 813.465s
+Seen 150000 samples, time used: 4062.477s
+  current training loss:                0.341458
+  current training accuracy:            0.901547
+saving to ..., time used 811.988s
+Seen 180000 samples, time used: 4880.870s
+  current training loss:                0.340362
+  current training accuracy:            0.901861
+saving to ..., time used 817.952s
+Seen 210000 samples, time used: 5698.838s
+  current training loss:                0.341805
+  current training accuracy:            0.901429
+saving to ..., time used 817.495s
+Seen 240000 samples, time used: 6535.512s
+  current training loss:                0.341819
+  current training accuracy:            0.901337
+saving to ..., time used 836.230s
+Seen 270000 samples, time used: 7368.870s
+  current training loss:                0.342465
+  current training accuracy:            0.901100
+saving to ..., time used 832.891s
+Seen 300000 samples, time used: 8207.725s
+  current training loss:                0.342695
+  current training accuracy:            0.900800
+saving to ..., time used 838.406s
+Seen 330000 samples, time used: 9022.585s
+  current training loss:                0.342919
+  current training accuracy:            0.900724
+saving to ..., time used 814.344s
+Seen 360000 samples, time used: 9836.869s
+  current training loss:                0.342797
+  current training accuracy:            0.900617
+saving to ..., time used 813.863s
+Seen 390000 samples, time used: 10642.213s
+  current training loss:                0.343099
+  current training accuracy:            0.900664
+saving to ..., time used 804.891s
+Seen 420000 samples, time used: 11450.067s
+  current training loss:                0.343325
+  current training accuracy:            0.900624
+saving to ..., time used 807.384s
+Seen 450000 samples, time used: 12258.949s
+  current training loss:                0.342893
+  current training accuracy:            0.900809
+saving to ..., time used 808.447s
+Seen 480000 samples, time used: 13068.002s
+  current training loss:                0.342704
+  current training accuracy:            0.900931
+saving to ..., time used 808.613s
+Seen 510000 samples, time used: 13874.229s
+  current training loss:                0.343087
+  current training accuracy:            0.900806
+saving to ..., time used 805.767s
+Seen 540000 samples, time used: 14687.291s
+  current training loss:                0.343238
+  current training accuracy:            0.900691
+saving to ..., time used 812.583s
+Epoch 17 of 20 took 14964.957s
+  training loss:                0.343197
+  training accuracy:            90.07 %
+  validation loss:              0.436254
+  validation accuracy:          84.17 %
+  test loss:                    0.462129
+  test accuracy:                83.10 %
+saving to ./snli/word_by_word_model_epoch17_after39.npz
+Seen 30000 samples, time used: 812.133s
+  current training loss:                0.337815
+  current training accuracy:            0.901900
+saving to ..., time used 812.133s
+Seen 60000 samples, time used: 1620.688s
+  current training loss:                0.339864
+  current training accuracy:            0.901633
+saving to ..., time used 808.120s
+Seen 90000 samples, time used: 2434.329s
+  current training loss:                0.339333
+  current training accuracy:            0.901900
+saving to ..., time used 813.194s
+Seen 120000 samples, time used: 3253.323s
+  current training loss:                0.341662
+  current training accuracy:            0.901500
+saving to ..., time used 818.517s
+Seen 150000 samples, time used: 4075.277s
+  current training loss:                0.342063
+  current training accuracy:            0.901120
+saving to ..., time used 821.445s
+Seen 180000 samples, time used: 4892.959s
+  current training loss:                0.341843
+  current training accuracy:            0.901200
+saving to ..., time used 817.237s
+Seen 210000 samples, time used: 5721.408s
+  current training loss:                0.341414
+  current training accuracy:            0.901390
+saving to ..., time used 827.983s
+Seen 240000 samples, time used: 6542.783s
+  current training loss:                0.342087
+  current training accuracy:            0.901171
+saving to ..., time used 820.936s
+Seen 270000 samples, time used: 7354.405s
+  current training loss:                0.343055
+  current training accuracy:            0.900837
+saving to ..., time used 811.133s
+Seen 300000 samples, time used: 8155.886s
+  current training loss:                0.342830
+  current training accuracy:            0.901193
+saving to ..., time used 801.053s
+Seen 330000 samples, time used: 8971.557s
+  current training loss:                0.343475
+  current training accuracy:            0.900930
+saving to ..., time used 815.159s
+Seen 360000 samples, time used: 9784.943s
+  current training loss:                0.343239
+  current training accuracy:            0.901097
+saving to ..., time used 812.920s
+Seen 390000 samples, time used: 10607.296s
+  current training loss:                0.343445
+  current training accuracy:            0.900982
+saving to ..., time used 821.932s
+Seen 420000 samples, time used: 11431.046s
+  current training loss:                0.343161
+  current training accuracy:            0.900917
+saving to ..., time used 823.271s
+Seen 450000 samples, time used: 12259.858s
+  current training loss:                0.343414
+  current training accuracy:            0.900931
+saving to ..., time used 828.408s
+Seen 480000 samples, time used: 13073.945s
+  current training loss:                0.343732
+  current training accuracy:            0.900994
+saving to ..., time used 813.660s
+Seen 510000 samples, time used: 13888.924s
+  current training loss:                0.343512
+  current training accuracy:            0.901018
+saving to ..., time used 814.553s
+Seen 540000 samples, time used: 14703.002s
+  current training loss:                0.343653
+  current training accuracy:            0.900985
+saving to ..., time used 813.615s
+Epoch 18 of 20 took 14981.071s
+  training loss:                0.343655
+  training accuracy:            90.10 %
+  validation loss:              0.439586
+  validation accuracy:          83.91 %
+  test loss:                    0.459635
+  test accuracy:                83.19 %
+saving to ./snli/word_by_word_model_epoch18_after39.npz
+Seen 30000 samples, time used: 836.933s
+  current training loss:                0.337180
+  current training accuracy:            0.904000
+saving to ..., time used 836.933s
+Seen 60000 samples, time used: 1643.022s
+  current training loss:                0.335215
+  current training accuracy:            0.903083
+saving to ..., time used 805.639s
+Seen 90000 samples, time used: 2446.827s
+  current training loss:                0.337056
+  current training accuracy:            0.902778
+saving to ..., time used 803.335s
+Seen 120000 samples, time used: 3252.423s
+  current training loss:                0.338321
+  current training accuracy:            0.902858
+saving to ..., time used 805.042s
+Seen 150000 samples, time used: 4060.232s
+  current training loss:                0.339076
+  current training accuracy:            0.902547
+saving to ..., time used 807.312s
+Seen 180000 samples, time used: 4875.473s
+  current training loss:                0.339178
+  current training accuracy:            0.902433
+saving to ..., time used 814.803s
+Seen 210000 samples, time used: 5683.844s
+  current training loss:                0.339375
+  current training accuracy:            0.902205
+saving to ..., time used 807.875s
+Seen 240000 samples, time used: 6495.821s
+  current training loss:                0.339361
+  current training accuracy:            0.902267
+saving to ..., time used 811.493s
+Seen 270000 samples, time used: 7307.231s
+  current training loss:                0.340091
+  current training accuracy:            0.902159
+saving to ..., time used 810.898s
+Seen 300000 samples, time used: 8116.789s
+  current training loss:                0.340326
+  current training accuracy:            0.901857
+saving to ..., time used 809.120s
+Seen 330000 samples, time used: 8955.603s
+  current training loss:                0.340084
+  current training accuracy:            0.901915
+saving to ..., time used 838.414s
+Seen 360000 samples, time used: 9784.563s
+  current training loss:                0.340625
+  current training accuracy:            0.901783
+saving to ..., time used 828.440s
+Seen 390000 samples, time used: 10623.242s
+  current training loss:                0.340967
+  current training accuracy:            0.901708
+saving to ..., time used 838.204s
+Seen 420000 samples, time used: 11457.812s
+  current training loss:                0.341240
+  current training accuracy:            0.901590
+saving to ..., time used 834.150s
+Seen 450000 samples, time used: 12278.730s
+  current training loss:                0.341498
+  current training accuracy:            0.901567
+saving to ..., time used 820.488s
+Seen 480000 samples, time used: 13088.616s
+  current training loss:                0.341841
+  current training accuracy:            0.901500
+saving to ..., time used 809.430s
+Seen 510000 samples, time used: 13898.721s
+  current training loss:                0.341623
+  current training accuracy:            0.901441
+saving to ..., time used 809.669s
+Seen 540000 samples, time used: 14733.119s
+  current training loss:                0.341831
+  current training accuracy:            0.901391
+saving to ..., time used 833.969s
+Epoch 19 of 20 took 15011.435s
+  training loss:                0.341839
+  training accuracy:            90.14 %
+  validation loss:              0.440305
+  validation accuracy:          84.08 %
+  test loss:                    0.460789
+  test accuracy:                82.97 %
+saving to ./snli/word_by_word_model_epoch19_after39.npz
+Seen 30000 samples, time used: 846.211s
+  current training loss:                0.334577
+  current training accuracy:            0.903667
+saving to ..., time used 846.211s
+Seen 60000 samples, time used: 1668.896s
+  current training loss:                0.336741
+  current training accuracy:            0.903433
+saving to ..., time used 822.231s
+Seen 90000 samples, time used: 2495.860s
+  current training loss:                0.336757
+  current training accuracy:            0.903233
+saving to ..., time used 826.506s
+Seen 120000 samples, time used: 3313.736s
+  current training loss:                0.336895
+  current training accuracy:            0.904100
+saving to ..., time used 817.401s
+Seen 150000 samples, time used: 4138.513s
+  current training loss:                0.337892
+  current training accuracy:            0.903867
+saving to ..., time used 824.309s
+Seen 180000 samples, time used: 4963.142s
+  current training loss:                0.337286
+  current training accuracy:            0.904022
+saving to ..., time used 824.137s
+Seen 210000 samples, time used: 5789.103s
+  current training loss:                0.338111
+  current training accuracy:            0.903610
+saving to ..., time used 825.504s
+Seen 240000 samples, time used: 6618.820s
+  current training loss:                0.338161
+  current training accuracy:            0.903546
+saving to ..., time used 829.290s
+Seen 270000 samples, time used: 7457.863s
+  current training loss:                0.338512
+  current training accuracy:            0.903248
+saving to ..., time used 838.589s
+Seen 300000 samples, time used: 8306.754s
+  current training loss:                0.338586
+  current training accuracy:            0.902990
+saving to ..., time used 848.434s
+Seen 330000 samples, time used: 9133.902s
+  current training loss:                0.339238
+  current training accuracy:            0.902767
+saving to ..., time used 826.707s
+Seen 360000 samples, time used: 9952.841s
+  current training loss:                0.339424
+  current training accuracy:            0.902800
+saving to ..., time used 818.461s
+Seen 390000 samples, time used: 10774.179s
+  current training loss:                0.339784
+  current training accuracy:            0.902446
+saving to ..., time used 820.904s
+Seen 420000 samples, time used: 11632.465s
+  current training loss:                0.339954
+  current training accuracy:            0.902398
+saving to ..., time used 857.802s
+Seen 450000 samples, time used: 12471.683s
+  current training loss:                0.340106
+  current training accuracy:            0.902302
+saving to ..., time used 838.759s
+Seen 480000 samples, time used: 13302.364s
+  current training loss:                0.340251
+  current training accuracy:            0.902352
+saving to ..., time used 830.171s
+Seen 510000 samples, time used: 14126.045s
+  current training loss:                0.340776
+  current training accuracy:            0.902222
+saving to ..., time used 823.253s
+Seen 540000 samples, time used: 14955.241s
+  current training loss:                0.341091
+  current training accuracy:            0.901985
+saving to ..., time used 828.750s
+Epoch 20 of 20 took 15239.914s
+  training loss:                0.340987
+  training accuracy:            90.20 %
+  validation loss:              0.437061
+  validation accuracy:          84.13 %
+  test loss:                    0.461104
+  test accuracy:                82.89 %
+saving to ./snli/word_by_word_model_epoch20_after39.npz

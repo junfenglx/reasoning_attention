@@ -34,8 +34,13 @@ Or run:
 Results
 ======
 
-The learning curve of word by word attention:
+The learning curve of word by word attention(best test acc is at epoch 41):
+Epoch: 1-20
 ![wordbyword_attention](./wordbyword_attention_dropout0.2.png)
+Epoch: 20-39
+![wordbyword_attention20_39](./wordbyword_attention_dropout0.2_after19.png)
+Epoch: 40-59
+![wordbyword_attention40_59](./wordbyword_attention_dropout0.2_after39.png)
 
 The learning curve of match LSTM with word embedding:
 ![mlstm_word2vec_embedding](./mlstm_word2vec_embedding.png)
@@ -44,7 +49,8 @@ Notes
 =====
 About word by word attention:
 
-1. The test acc of match LSTM is 1% smaller than the original paper, 82.31%
+1. The test acc of word by word attention is 0.2% smaller than the original paper, 83.29% (41 epochs)
+2. every 20 epochs, we reduce learning_rate, see log files for detail info.
 
 
 About match LSTM:
