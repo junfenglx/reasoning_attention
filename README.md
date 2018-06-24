@@ -12,6 +12,7 @@ Based on Lasagne.
 
 Requirements
 ===========
+* Cuda 8(Theano can run with)
 * Python 3
 * Lasagne
 * some others(best install Anaconda)
